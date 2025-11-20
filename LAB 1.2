@@ -1,0 +1,25 @@
+import java.util.Scanner;
+
+public class RectangleAreaCalculator {
+    public static void main(String[] args) {
+        // สร้างอ็อบเจกต์ Scanner เพื่อรับข้อมูลจากผู้ใช้
+        Scanner scanner = new Scanner(System.in);
+
+        // แสดงข้อความและรับค่าความกว้าง (Width)
+        // System.out.print("ป้อนความกว้าง (Width) เป็นตัวเลขทศนิยม: ");
+        double width = scanner.nextDouble();
+
+        // แสดงข้อความและรับค่าความสูง (Height)
+        // System.out.print("ป้อนความสูง (Height) เป็นตัวเลขทศนิยม: ");
+        double height = scanner.nextDouble();
+
+        // คำนวณพื้นที่ (Area) ของสี่เหลี่ยมผืนผ้า
+        double area = width * height;
+
+        // แสดงผลลัพธ์พื้นที่ออกทางหน้าจอ
+        System.out.println(area);
+
+        // ปิดอ็อบเจกต์ Scanner เพื่อคืนทรัพยากร
+        scanner.close();
+    }
+}
