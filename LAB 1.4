@@ -1,0 +1,51 @@
+import java.util.Scanner;
+
+// เปลี่ยนชื่อคลาสจาก GradeCalculator เป็น Main
+public class Main { 
+    public static void main(String[] args) {
+        // สร้าง object Scanner สำหรับรับข้อมูลจากผู้ใช้
+        Scanner scanner = new Scanner(System.in);
+
+        // แสดงข้อความให้ผู้ใช้ป้อนคะแนน
+        System.out.print("โปรดป้อนคะแนนสอบ (0-100): ");
+// ตรวจสอบว่าข้อมูลที่ป้อนเข้ามาเป็นจำนวนเต็มหรือไม่
+        if (scanner.hasNextInt()) {
+            int score = scanner.nextInt();
+            String grade;
+
+            // ตรวจสอบความถูกต้องของคะแนน (ต้องอยู่ระหว่าง 0 ถึง 100)
+            if (score < 0 || score > 100) {
+                grade = "คะแนนที่ป้อนไม่ถูกต้อง (ต้องอยู่ระหว่าง 0 ถึง 100)";
+            } else {
+                // เงื่อนไขการตัดเกรดตามที่โจทย์กำหนด
+                if (score >= 80) {
+                    grade = "A";
+                } else if (score >= 70) {
+                    grade = "B";
+                } else if (score >= 60) {
+                    grade = "C";
+                } else if (score >= 50) {
+                    grade = "D";
+                } else {
+                    // คะแนน 0 - 49
+                    grade = "F";
+                }
+            }
+
+            // แสดงผลลัพธ์
+            System.out.println("คะแนนที่ป้อน: " + score);
+            if (grade.length() == 1) { // ถ้าเป็นเกรด A, B, C, D, F
+                System.out.println("คุณได้เกรด: " + grade);
+            } else { // ถ้าเป็นข้อความผิดพลาด
+                System.out.println(grade);
+            }
+
+        } else {
+            // กรณีที่ผู้ใช้ป้อนข้อมูลที่ไม่ใช่จำนวนเต็ม
+            System.out.println("ข้อมูลที่ป้อนไม่ถูกต้อง โปรดป้อนเป็นตัวเลขจำนวนเต็มเท่านั้น");
+        }
+
+        // ปิด Scanner
+        scanner.close();
+    }
+}
