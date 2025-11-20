@@ -2,46 +2,49 @@ import java.util.Scanner;
 
 public class Main {
 
-    // กำหนดค่าคงที่ (Constants) สำหรับขอบเขตการคูณ เพื่อให้ชัดเจนว่าเริ่มและจบที่ใด
-    private static final int START_MULTIPLIER = 1;
-    private static final int END_MULTIPLIER = 12;
-    
+    // กำหนดค่าคงที่สำหรับขอบเขตการคูณ เพื่อความชัดเจนและง่ายต่อการแก้ไข (CLO3: Good Naming)
+    private static final int MINIMUM_FACTOR = 1;
+    private static final int MAXIMUM_FACTOR = 12;
+
     public static void main(String[] args) {
-        // ใช้ try-with-resources เพื่อให้แน่ใจว่า Scanner ถูกปิดอย่างถูกต้อง
-        try (Scanner consoleInput = new Scanner(System.in)) {
+        // ใช้ try-with-resources เพื่อจัดการ Scanner โดยอัตโนมัติ
+        try (Scanner inputScanner = new Scanner(System.in)) {
             
-            // 1. รับค่าแม่สูตรคูณ (The Base Number for the Table)
-            System.out.print("โปรดป้อนจำนวนเต็ม (แม่สูตรคูณ): ");
-            int baseNumber = consoleInput.nextInt();
+            // 1. รับค่าฐานสูตรคูณ 
+            System.out.print("โปรดป้อนจำนวนเต็มแม่สูตรคูณ (สามารถเป็นจำนวนลบได้): ");
+            int baseNumber = inputScanner.nextInt();
 
-            // 2. แสดงหัวตาราง
-            printTableHeading(baseNumber);
-
-            // 3. วนลูปคำนวณและแสดงผลลัพธ์
-            generateAndPrintTable(baseNumber);
+            // 2. จัดการ Edge Case จำนวนลบ (CLO2 Fix)
+            if (baseNumber < 0) {
+                System.out.println("\n⚠️ คำเตือน: ระบบจะแสดงผลสูตรคูณของจำนวนลบ");
+            }
+            
+            // 3. แสดงผลลัพธ์สูตรคูณ
+            printMultiplicationTable(baseNumber);
 
         } catch (java.util.InputMismatchException e) {
             // ดักจับข้อผิดพลาดหากผู้ใช้ป้อนค่าที่ไม่ใช่จำนวนเต็ม
             System.err.println("❌ ข้อผิดพลาด: กรุณาป้อนจำนวนเต็มที่ถูกต้องเท่านั้น");
         }
     }
-    
-    private static void printTableHeading(int number) {
-        System.out.println("\n--- สูตรคูณแม่ " + number + " (จาก " + START_MULTIPLIER + " ถึง " + END_MULTIPLIER + ") ---");
-        System.out.println("------------------------------------------");
-    }
 
-    private static void generateAndPrintTable(int baseNumber) {
-        // ตัวแปร i ถูกเปลี่ยนชื่อเป็น currentFactor เพื่อให้สื่อความหมายว่าเป็นตัวคูณปัจจุบัน
-        for (int currentFactor = START_MULTIPLIER; currentFactor <= END_MULTIPLIER; currentFactor++) {
+    /**
+     * พิมพ์ตารางสูตรคูณ (Code is modular: CLO3)
+     * @param baseNumber จำนวนฐานของสูตรคูณ
+     */
+    private static void printMultiplicationTable(int baseNumber) {
+        System.out.println("\n--- สูตรคูณแม่ " + baseNumber + " (ตัวคูณ " + MINIMUM_FACTOR + " ถึง " + MAXIMUM_FACTOR + ") ---");
+        
+        // Loop ที่ชัดเจนและปลอดภัย (CLO2: Loops terminate safely)
+        for (int factor = MINIMUM_FACTOR; factor <= MAXIMUM_FACTOR; factor++) {
             
-            // คำนวณผลลัพธ์: baseNumber * currentFactor
-            int productResult = baseNumber * currentFactor;
+            int productResult = baseNumber * factor;
             
-            // รูปแบบการแสดงผล: [แม่สูตรคูณ] x [ตัวคูณ] = [ผลลัพธ์]
-            String outputLine = String.format("%d x %d = %d", baseNumber, currentFactor, productResult);
+            // ใช้ String.format เพื่อแก้ไข Small formatting issues (CLO4 Fix)
+            String outputLine = String.format("%-4d x %2d = %5d", baseNumber, factor, productResult);
             
             System.out.println(outputLine);
         }
+        System.out.println("----------------------------------------------------------------");
     }
 }
