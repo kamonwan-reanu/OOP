@@ -1,0 +1,73 @@
+import java.util.Scanner;
+import java.util.Arrays; // นำเข้าไลบรารี Arrays สำหรับใช้ในการแสดงผล (Optional)
+
+public class MaximumFinder {
+
+    public static void main(String[] args) {
+        // 1. เตรียมตัวรับข้อมูล (Setup Scanner)
+        Scanner inputScanner = new Scanner(System.in);
+        int arraySize;
+
+        // รับค่า N (จำนวนเต็มที่ต้องการรับ) และตรวจสอบความถูกต้อง
+        System.out.println("Enter the count of numbers (N):");
+        if (inputScanner.hasNextInt()) {
+            arraySize = inputScanner.nextInt();
+            // ตรวจสอบว่า N เป็นจำนวนเต็มบวก
+            if (arraySize <= 0) {
+                System.out.println("N must be a positive integer (N > 0). Exiting.");
+                inputScanner.close();
+                return;
+            }
+        } else {
+            System.out.println("Invalid input for N. Please enter an integer. Exiting.");
+            inputScanner.close();
+            return;
+        }
+
+        // 2. สร้าง Array เพื่อจัดเก็บตัวเลข
+        int[] dataArray = new int[arraySize];
+
+        // 3. รับค่า N จำนวนเต็มและเก็บใน Array
+        System.out.println("Enter " + arraySize + " integers, one by one:");
+        for (int i = 0; i < arraySize; i++) {
+            System.out.print("Number " + (i + 1) + ": ");
+            if (inputScanner.hasNextInt()) {
+                dataArray[i] = inputScanner.nextInt();
+            } else {
+                System.out.println("Invalid input! Please enter an integer.");
+                // ล้างค่าที่ไม่ใช่น้ำออกไป และวนซ้ำเพื่อรับข้อมูลตัวเดิมใหม่
+                inputScanner.next(); 
+                i--; 
+            }
+        }
+
+        // ปิด Scanner เมื่อรับข้อมูลเสร็จสิ้น
+        inputScanner.close();
+
+        // 4. ค้นหาค่ามากที่สุด (Maximum Value)
+        int maximumValue = findMaximum(dataArray);
+
+        // 5. แสดงผลลัพธ์
+        System.out.println("\n--- Result ---");
+        System.out.println("All numbers entered: " + Arrays.toString(dataArray));
+        System.out.println("Maximum Value (ค่าที่มากที่สุด): " + maximumValue);
+    }
+    
+    /**
+     * เมธอดสำหรับค้นหาค่ามากที่สุดใน Array
+     * @param arr Array ของจำนวนเต็ม
+     * @return ค่ามากที่สุดใน Array
+     */
+    public static int findMaximum(int[] arr) {
+        // กำหนดให้ตัวแรกเป็นค่ามากที่สุดเริ่มต้น
+        int currentMax = arr[0]; 
+
+        // วนซ้ำเพื่อเปรียบเทียบกับสมาชิกตัวที่เหลือ
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] > currentMax) {
+                currentMax = arr[i]; // อัปเดตค่ามากที่สุด
+            }
+        }
+        return currentMax;
+    }
+}
