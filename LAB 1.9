@@ -1,0 +1,52 @@
+import java.util.Scanner;
+
+public class ArrayAverageCalculator {
+
+    public static void main(String[] args) {
+        // สร้างออบเจกต์ Scanner เพื่อรับข้อมูลจากผู้ใช้
+        Scanner scanner = new Scanner(System.in);
+
+        // 1. รับค่า N (จำนวนของตัวเลขที่จะรับเข้ามา)
+        int N;
+        System.out.print("โปรดป้อนค่า N (จำนวนเต็มบวก): ");
+        N = scanner.nextInt();
+
+        // ตรวจสอบ N ต้องเป็นจำนวนเต็มบวก
+        if (N <= 0) {
+            System.out.println("N ต้องเป็นจำนวนเต็มบวก โปรดลองใหม่อีกครั้ง");
+            scanner.close();
+            return; // จบการทำงานของโปรแกรม
+        }
+
+        // 2. สร้าง Array เพื่อเก็บตัวเลข N จำนวน
+        int[] numbers = new int[N];
+        
+        // ตัวแปรสำหรับเก็บผลรวมของตัวเลขทั้งหมดใน Array
+        long sum = 0; // ใช้ long เพื่อป้องกัน Integer Overflow หาก N และตัวเลขมีค่ามาก
+
+        System.out.println("---");
+        System.out.println("โปรดป้อนตัวเลข " + N + " ตัว (เป็นจำนวนเต็ม):");
+        
+        // 3. วนลูปเพื่อรับค่าตัวเลข N จำนวน และคำนวณผลรวม
+        for (int i = 0; i < N; i++) {
+            System.out.print("ตัวเลขที่ " + (i + 1) + ": ");
+            numbers[i] = scanner.nextInt();
+            
+            // บวกค่าที่รับเข้ามาในผลรวม
+            sum += numbers[i];
+        }
+
+        // 4. คำนวณค่าเฉลี่ย
+        // การหารด้วย (double)N จะทำให้ผลลัพธ์เป็นทศนิยมตามที่โจทย์ต้องการ
+        double average = (double) sum / N;
+
+        // 5. แสดงผลลัพธ์
+        System.out.println("---");
+        System.out.println("ผลรวมของตัวเลขทั้งหมดคือ: " + sum);
+        System.out.println("จำนวนตัวเลขที่รับเข้ามา (N): " + N);
+        System.out.printf("ค่าเฉลี่ย (Average) คือ: %.1f%n", average); // ใช้ printf เพื่อกำหนดทศนิยม 1 ตำแหน่งตามตัวอย่าง Output (30.0)
+
+        // ปิด Scanner
+        scanner.close();
+    }
+}
