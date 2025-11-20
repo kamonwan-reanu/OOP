@@ -1,0 +1,47 @@
+import java.util.Scanner;
+
+public class Main {
+
+    // กำหนดค่าคงที่ (Constants) สำหรับขอบเขตการคูณ เพื่อให้ชัดเจนว่าเริ่มและจบที่ใด
+    private static final int START_MULTIPLIER = 1;
+    private static final int END_MULTIPLIER = 12;
+    
+    public static void main(String[] args) {
+        // ใช้ try-with-resources เพื่อให้แน่ใจว่า Scanner ถูกปิดอย่างถูกต้อง
+        try (Scanner consoleInput = new Scanner(System.in)) {
+            
+            // 1. รับค่าแม่สูตรคูณ (The Base Number for the Table)
+            System.out.print("โปรดป้อนจำนวนเต็ม (แม่สูตรคูณ): ");
+            int baseNumber = consoleInput.nextInt();
+
+            // 2. แสดงหัวตาราง
+            printTableHeading(baseNumber);
+
+            // 3. วนลูปคำนวณและแสดงผลลัพธ์
+            generateAndPrintTable(baseNumber);
+
+        } catch (java.util.InputMismatchException e) {
+            // ดักจับข้อผิดพลาดหากผู้ใช้ป้อนค่าที่ไม่ใช่จำนวนเต็ม
+            System.err.println("❌ ข้อผิดพลาด: กรุณาป้อนจำนวนเต็มที่ถูกต้องเท่านั้น");
+        }
+    }
+    
+    private static void printTableHeading(int number) {
+        System.out.println("\n--- สูตรคูณแม่ " + number + " (จาก " + START_MULTIPLIER + " ถึง " + END_MULTIPLIER + ") ---");
+        System.out.println("------------------------------------------");
+    }
+
+    private static void generateAndPrintTable(int baseNumber) {
+        // ตัวแปร i ถูกเปลี่ยนชื่อเป็น currentFactor เพื่อให้สื่อความหมายว่าเป็นตัวคูณปัจจุบัน
+        for (int currentFactor = START_MULTIPLIER; currentFactor <= END_MULTIPLIER; currentFactor++) {
+            
+            // คำนวณผลลัพธ์: baseNumber * currentFactor
+            int productResult = baseNumber * currentFactor;
+            
+            // รูปแบบการแสดงผล: [แม่สูตรคูณ] x [ตัวคูณ] = [ผลลัพธ์]
+            String outputLine = String.format("%d x %d = %d", baseNumber, currentFactor, productResult);
+            
+            System.out.println(outputLine);
+        }
+    }
+}
