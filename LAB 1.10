@@ -1,0 +1,60 @@
+import java.util.Scanner;
+
+/**
+ * โปรแกรม Java สำหรับคำนวณพื้นที่สี่เหลี่ยมผืนผ้า
+ * ประกอบด้วยฟังก์ชัน calculateArea และเมธอด main
+ */
+public class RectangleArea {
+
+    // --- ฟังก์ชัน (Method): calculateArea ---
+
+    /**
+     * คำนวณพื้นที่ของสี่เหลี่ยมผืนผ้า
+     *
+     * @param width ความกว้างของสี่เหลี่ยมผืนผ้า (double)
+     * @param height ความสูงของสี่เหลี่ยมผืนผ้า (double)
+     * @return พื้นที่ของสี่เหลี่ยมผืนผ้า (double) ซึ่งคำนวณจาก width * height
+     */
+    public static double calculateArea(double width, double height) {
+        // สูตร: พื้นที่ = กว้าง * สูง
+        return width * height;
+    }
+
+    // --- เมธอด main ---
+
+    public static void main(String[] args) {
+        // ใช้ Scanner เพื่อรับข้อมูลจากผู้ใช้
+        Scanner scanner = new Scanner(System.in);
+
+        // 1. รับค่า "ความกว้าง" และ "ความสูง" จากผู้ใช้ (เป็นชนิด double)
+        System.out.print("โปรดป้อนความกว้าง (width) เป็น double: ");
+        // ตรวจสอบว่าอินพุตเป็น double หรือไม่ เพื่อป้องกันข้อผิดพลาด
+        if (!scanner.hasNextDouble()) {
+            System.err.println("❌ ข้อผิดพลาด: อินพุตสำหรับความกว้างไม่ถูกต้อง โปรดป้อนตัวเลขทศนิยม");
+            return; // จบการทำงาน
+        }
+        double width = scanner.nextDouble();
+
+        System.out.print("โปรดป้อนความสูง (height) เป็น double: ");
+        if (!scanner.hasNextDouble()) {
+            System.err.println("❌ ข้อผิดพลาด: อินพุตสำหรับความสูงไม่ถูกต้อง โปรดป้อนตัวเลขทศนิยม");
+            return; // จบการทำงาน
+        }
+        double height = scanner.nextDouble();
+
+        // 2. เรียกใช้ฟังก์ชัน calculateArea
+        double areaResult = calculateArea(width, height);
+
+        // 3. นำผลลัพธ์ที่ได้จากฟังก์ชันมาแสดงผลออกทางหน้าจอ
+        System.out.println("--- ผลลัพธ์ ---");
+        System.out.println("ความกว้างที่ป้อน: " + width);
+        System.out.println("ความสูงที่ป้อน: " + height);
+        System.out.println("✅ พื้นที่สี่เหลี่ยมผืนผ้า (Area): " + areaResult);
+
+        // ตัวอย่าง Test Case 1:
+        // Input: 10.0 (width), 5.0 (height)
+        // Output: 50.0
+
+        scanner.close(); // ปิด Scanner
+    }
+}
