@@ -1,0 +1,43 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        // สร้างอ็อบเจกต์ Scanner สำหรับรับอินพุตจากผู้ใช้
+        Scanner scanner = new Scanner(System.in);
+
+        // แสดงข้อความแจ้งให้ผู้ใช้ป้อนหมายเลขเมนู
+        System.out.println("กรุณาป้อนหมายเลขเมนู (1, 2, 3, หรือ 4):");
+
+        // รับค่าจำนวนเต็มจากผู้ใช้
+        int menuNumber = scanner.nextInt();
+
+        // ตัวแปรสำหรับเก็บชื่อเครื่องดื่ม
+        String coffeeName;
+
+        // ใช้คำสั่ง switch เพื่อตรวจสอบค่าของ menuNumber
+        switch (menuNumber) {
+            case 1:
+                coffeeName = "Americano";
+                break; // ออกจาก switch เมื่อพบ case ที่ตรงกัน
+            case 2:
+                coffeeName = "Latte";
+                break;
+            case 3:
+                coffeeName = "Espresso";
+                break;
+            case 4:
+                coffeeName = "Mocha";
+                break;
+            default:
+                // กรณีที่ค่า menuNumber ไม่ตรงกับ case ใดๆ (นอกเหนือจาก 1, 2, 3, 4)
+                coffeeName = "Invalid Menu";
+                break;
+        }
+
+        // แสดงผลลัพธ์
+        System.out.println(coffeeName);
+
+        // ปิดอ็อบเจกต์ Scanner
+        scanner.close();
+    }
+}
