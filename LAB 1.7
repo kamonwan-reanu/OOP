@@ -1,0 +1,45 @@
+import java.util.Scanner;
+
+public class SumOfNNumbers {
+
+    public static void main(String[] args) {
+        // สร้างอ็อบเจกต์ Scanner เพื่อรับข้อมูลจากผู้ใช้ผ่านทางคีย์บอร์ด
+        Scanner scanner = new Scanner(System.in);
+
+        // --- ส่วนที่ 1: รับค่า N (จำนวนตัวเลขที่ต้องการรวม) ---
+        System.out.print("Enter the number of integers (N): ");
+        // รับค่า N เป็นจำนวนเต็ม
+        int N = scanner.nextInt();
+
+        // ตรวจสอบให้แน่ใจว่า N เป็นจำนวนบวก
+        if (N <= 0) {
+            System.out.println("N must be a positive integer.");
+            scanner.close(); // ปิด Scanner ก่อนจบโปรแกรม
+            return; // จบการทำงานของเมธอด main
+        }
+
+        // ตัวแปรสำหรับเก็บผลรวม (เริ่มต้นที่ 0)
+        // ใช้ long เผื่อไว้กรณีที่ผลรวมมีค่ามาก แม้ว่าโจทย์จะใช้ int ก็ตาม แต่การใช้ long จะปลอดภัยกว่าสำหรับผลรวม
+        long sum = 0;
+
+        // --- ส่วนที่ 2: รับค่า N จำนวนและคำนวณผลรวม ---
+        System.out.println("Enter " + N + " integers:");
+
+        // ใช้ loop for เพื่อรับค่าตัวเลข N จำนวนตามที่ระบุไว้
+        for (int i = 0; i < N; i++) {
+            System.out.print("Integer #" + (i + 1) + ": ");
+            // รับค่าตัวเลขแต่ละตัว
+            int number = scanner.nextInt();
+
+            // เพิ่มค่าตัวเลขที่รับมาเข้ากับผลรวม
+            sum += number;
+        }
+
+        // --- ส่วนที่ 3: แสดงผลลัพธ์ ---
+        System.out.println("\n--- Result ---");
+        System.out.println("The Sum of the " + N + " integers is: " + sum);
+
+        // ปิดอ็อบเจกต์ Scanner เพื่อปล่อยทรัพยากร
+        scanner.close();
+    }
+}
