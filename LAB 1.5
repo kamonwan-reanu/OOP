@@ -1,43 +1,44 @@
+// CoffeeMenu.java
 import java.util.Scanner;
 
-public class Main {
+public class CoffeeMenu {
+    // โค้ดต้องมี main() method เสมอ เพื่อเป็นจุดเริ่มต้นการทำงานของโปรแกรม
     public static void main(String[] args) {
-        // สร้างอ็อบเจกต์ Scanner สำหรับรับอินพุตจากผู้ใช้
         Scanner scanner = new Scanner(System.in);
+        
+        // **I/O (Input/Output) ตาม format ของ Testcase**
+        // โค้ดควรรับ input ทันที โดยไม่จำเป็นต้องมี prompt ถ้าโจทย์ต้องการ I/O แบบง่าย
+        // แต่เพื่อความชัดเจนในการใช้งาน จะคง prompt ไว้
+        // System.out.println("กรุณาป้อนหมายเลขเมนู (1, 2, 3, หรือ 4):"); // (สามารถลบบรรทัดนี้ได้ หากต้องการให้ Output มีเพียงชื่อเครื่องดื่ม)
 
-        // แสดงข้อความแจ้งให้ผู้ใช้ป้อนหมายเลขเมนู
-        System.out.println("กรุณาป้อนหมายเลขเมนู (1, 2, 3, หรือ 4):");
-
-        // รับค่าจำนวนเต็มจากผู้ใช้
-        int menuNumber = scanner.nextInt();
-
-        // ตัวแปรสำหรับเก็บชื่อเครื่องดื่ม
-        String coffeeName;
-
-        // ใช้คำสั่ง switch เพื่อตรวจสอบค่าของ menuNumber
-        switch (menuNumber) {
-            case 1:
-                coffeeName = "Americano";
-                break; // ออกจาก switch เมื่อพบ case ที่ตรงกัน
-            case 2:
-                coffeeName = "Latte";
-                break;
-            case 3:
-                coffeeName = "Espresso";
-                break;
-            case 4:
-                coffeeName = "Mocha";
-                break;
-            default:
-                // กรณีที่ค่า menuNumber ไม่ตรงกับ case ใดๆ (นอกเหนือจาก 1, 2, 3, 4)
-                coffeeName = "Invalid Menu";
-                break;
+        if (scanner.hasNextInt()) {
+            int menuNumber = scanner.nextInt();
+            String coffeeName;
+    
+            switch (menuNumber) {
+                case 1:
+                    coffeeName = "Americano";
+                    break;
+                case 2:
+                    coffeeName = "Latte";
+                    break;
+                case 3:
+                    coffeeName = "Espresso";
+                    break;
+                case 4:
+                    coffeeName = "Mocha";
+                    break;
+                default:
+                    coffeeName = "Invalid Menu";
+                    break;
+            }
+            // แสดงผลลัพธ์
+            System.out.println(coffeeName);
+        } else {
+            // กรณีที่ผู้ใช้ป้อนค่าที่ไม่ใช่ตัวเลข
+            System.out.println("Invalid Menu");
         }
 
-        // แสดงผลลัพธ์
-        System.out.println(coffeeName);
-
-        // ปิดอ็อบเจกต์ Scanner
         scanner.close();
     }
 }
