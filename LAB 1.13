@@ -1,0 +1,108 @@
+import java.util.Scanner;
+
+public class ServerMonitoringDashboard {
+
+    /**
+     * เมธอดหลักสำหรับรับ Input และเรียกใช้ฟังก์ชันในการนับเซิร์ฟเวอร์ Online
+     */
+    public static void main(String[] args) {
+        // สร้าง Object Scanner สำหรับรับข้อมูลจากผู้ใช้
+        Scanner scanner = new Scanner(System.in);
+
+        // 1. รับค่าขนาดของ Grid (R และ C)
+        try {
+            System.out.println("--- Server Monitoring Dashboard Initializer ---");
+            System.out.print("Enter R (number of rows) and C (number of columns), separated by space: ");
+            
+            // ใช้ nextInt() เพื่อรับจำนวนเต็ม R และ C
+            if (!scanner.hasNextInt()) {
+                System.err.println("Error: R must be an integer.");
+                return;
+            }
+            int R = scanner.nextInt(); // R: จำนวนแถว (Row Count)
+            
+            if (!scanner.hasNextInt()) {
+                System.err.println("Error: C must be an integer.");
+                return;
+            }
+            int C = scanner.nextInt(); // C: จำนวนคอลัมน์ (Column Count)
+            
+            // ตรวจสอบความถูกต้องของ R และ C
+            if (R <= 0 || C <= 0) {
+                System.err.println("Error: R and C must be positive integers.");
+                return;
+            }
+
+            // 2. สร้าง Array 2 มิติ เพื่อเก็บสถานะของเซิร์ฟเวอร์
+            // serverStatus[R][C]
+            int[][] serverStatus = new int[R][C];
+
+            System.out.println("\nEnter server status (1 for Online, 0 for Offline) row by row:");
+            
+            // 3. รับค่าสถานะเซิร์ฟเวอร์ R x C
+            for (int i = 0; i < R; i++) {
+                System.out.print("Row " + (i + 1) + " (enter " + C + " values, separated by space): ");
+                for (int j = 0; j < C; j++) {
+                    if (!scanner.hasNextInt()) {
+                        // จัดการในกรณีที่ input ไม่ใช่จำนวนเต็ม
+                        System.err.println("Error: Input value must be 0 or 1. Please restart the program.");
+                        return;
+                    }
+                    int status = scanner.nextInt();
+                    // ตรวจสอบว่าค่าที่รับมาเป็น 0 หรือ 1 เท่านั้น
+                    if (status != 0 && status != 1) {
+                        System.err.println("Error: Server status must be either 0 (Offline) or 1 (Online). Please restart the program.");
+                        return;
+                    }
+                    serverStatus[i][j] = status;
+                }
+            }
+
+            // 4. คำนวณจำนวนเซิร์ฟเวอร์ Online
+            int onlineCount = countOnlineServers(serverStatus);
+
+            // 5. แสดงผลลัพธ์
+            System.out.println("\n--- Result ---");
+            System.out.println("Total Servers: " + (R * C));
+            System.out.println("จำนวนเซิร์ฟเวอร์ Online ทั้งหมด: **" + onlineCount + "**");
+            System.out.println("--- End of Report ---");
+
+        } catch (Exception e) {
+            // จัดการข้อผิดพลาดทั่วไป เช่น Input Mismatch
+            System.err.println("\nAn unexpected error occurred: " + e.getMessage());
+            System.err.println("Please check your input format and try again.");
+        } finally {
+            // ปิด Scanner เสมอเพื่อคืนทรัพยากร
+            scanner.close();
+        }
+    }
+
+    /**
+     * ฟังก์ชันสำหรับนับจำนวนเซิร์ฟเวอร์ที่มีสถานะเป็น "Online" (ค่าเป็น 1)
+     *
+     * @param grid Array 2 มิติ (R x C) ที่เก็บสถานะเซิร์ฟเวอร์ (0 หรือ 1)
+     * @return จำนวนรวมของเซิร์ฟเวอร์ที่มีค่าเป็น 1 (Online)
+     */
+    public static int countOnlineServers(int[][] grid) {
+        int onlineCounter = 0; // ตัวแปรสำหรับนับเซิร์ฟเวอร์ Online
+        
+        // ตรวจสอบว่า Grid ไม่เป็น null และมีข้อมูล
+        if (grid == null || grid.length == 0 || grid[0].length == 0) {
+            return 0;
+        }
+
+        // วนลูปผ่านทุกแถว (i)
+        for (int i = 0; i < grid.length; i++) {
+            // วนลูปผ่านทุกคอลัมน์ (j) ในแถวนั้น
+            for (int j = 0; j < grid[i].length; j++) {
+                
+                // ถ้าค่าในตำแหน่ง grid[i][j] เป็น 1 (Online)
+                if (grid[i][j] == 1) {
+                    onlineCounter++; // เพิ่มค่านับ
+                }
+            }
+        }
+        
+        return onlineCounter;
+    }
+}
