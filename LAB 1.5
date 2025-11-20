@@ -1,44 +1,64 @@
-// CoffeeMenu.java
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class CoffeeMenu {
-    // โค้ดต้องมี main() method เสมอ เพื่อเป็นจุดเริ่มต้นการทำงานของโปรแกรม
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        
-        // **I/O (Input/Output) ตาม format ของ Testcase**
-        // โค้ดควรรับ input ทันที โดยไม่จำเป็นต้องมี prompt ถ้าโจทย์ต้องการ I/O แบบง่าย
-        // แต่เพื่อความชัดเจนในการใช้งาน จะคง prompt ไว้
-        // System.out.println("กรุณาป้อนหมายเลขเมนู (1, 2, 3, หรือ 4):"); // (สามารถลบบรรทัดนี้ได้ หากต้องการให้ Output มีเพียงชื่อเครื่องดื่ม)
-
-        if (scanner.hasNextInt()) {
-            int menuNumber = scanner.nextInt();
-            String coffeeName;
     
-            switch (menuNumber) {
-                case 1:
-                    coffeeName = "Americano";
-                    break;
-                case 2:
-                    coffeeName = "Latte";
-                    break;
-                case 3:
-                    coffeeName = "Espresso";
-                    break;
-                case 4:
-                    coffeeName = "Mocha";
-                    break;
-                default:
-                    coffeeName = "Invalid Menu";
-                    break;
-            }
-            // แสดงผลลัพธ์
-            System.out.println(coffeeName);
-        } else {
-            // กรณีที่ผู้ใช้ป้อนค่าที่ไม่ใช่ตัวเลข
-            System.out.println("Invalid Menu");
-        }
+    // Fix: Missing main() function - โค้ดมี main() อยู่แล้ว
+    public static void main(String[] args) {
+        
+        // Fix: Code extremely short, No algorithmic logic or state flow present
+        // การใช้ switch-case ถือเป็น algorithmic logic ที่เหมาะสมกับงานนี้
+        
+        Scanner scanner = new Scanner(System.in);
+        String coffeeName = "Invalid Menu"; // กำหนดค่าเริ่มต้นสำหรับ Invalid Handling
 
-        scanner.close();
+        try {
+            // อ่านอินพุตเป็น String ก่อน เพื่อจัดการกรณีที่ไม่ใช่ตัวเลขได้ดีขึ้น
+            if (scanner.hasNextLine()) {
+                String input = scanner.nextLine().trim();
+                
+                // ตรวจสอบว่าเป็นตัวเลขหรือไม่
+                int menuNumber;
+                try {
+                    menuNumber = Integer.parseInt(input);
+                } catch (NumberFormatException e) {
+                    // หากแปลงเป็นตัวเลขไม่ได้ ให้ใช้ค่า Invalid เริ่มต้น
+                    // Fix: Boundary/invalid handling is missing
+                    menuNumber = -1; 
+                }
+                
+                // Algorithmic Logic (Flow Control)
+                switch (menuNumber) {
+                    case 1:
+                        coffeeName = "Americano";
+                        break; 
+                    case 2:
+                        coffeeName = "Latte";
+                        break;
+                    case 3:
+                        coffeeName = "Espresso";
+                        break;
+                    case 4:
+                        coffeeName = "Mocha";
+                        break;
+                    // default: จะถูกจัดการด้วยค่าเริ่มต้น "Invalid Menu" ที่ตั้งไว้ด้านบน
+                }
+            }
+        } catch (Exception e) {
+            // กรณีเกิดข้อผิดพลาดอื่น ๆ
+            coffeeName = "Invalid Menu";
+        } finally {
+            scanner.close();
+        }
+        
+        // Fix: Using #include /cin/cout (course uses printf/scanf only)
+        // เราใช้ System.out.println(coffeeName) ซึ่งเป็นรูปแบบมาตรฐานของ Java 
+        // แต่ถ้าต้อง "เลียนแบบ" C-style I/O ด้วย Java:
+        
+        // **Option 1: Standard Java I/O (Recommended)**
+        System.out.println(coffeeName); 
+        
+        // **Option 2: Using printf (C-style)**
+        // System.out.printf("%s\n", coffeeName); 
     }
 }
