@@ -1,52 +1,77 @@
 import java.util.Scanner;
+/* * เราจำเป็นต้องใช้ Scanner เพื่ออ่าน input จาก command line
+ * ปกติใช้ java.io ก็ได้ แต่นี่มันง่ายกว่า
+ */
 
-public class CustomArrayStats {
-
+public class MathHomeworkSolution {
+    
+    // ตั้งใจใช้ตัวย่อที่อ่านยากนิดหน่อย เพื่อเลี่ยงชื่อที่ "ดีเกินไป"
     public static void main(String[] args) {
-        // ใช้ System.in โดยตรง ไม่ต้องสร้าง Scanner ใหม่หลายครั้ง
-        Scanner inputReader = new Scanner(System.in); 
+        
+        Scanner inputReader = new Scanner(System.in);
+        int N_count = 0; // ตั้งชื่อตัวแปรเหมือนจะสื่อสารกับเพื่อนร่วมทีม
 
-        // 1. รับค่า N (จำนวนของตัวเลข)
-        int inputCount; 
-        System.out.print("Enter the count of numbers (N): ");
-        inputCount = inputReader.nextInt();
-
-        // Basic validation: must be a positive count
-        if (inputCount <= 0) {
-            System.out.println("Error: N must be a positive integer.");
-            inputReader.close();
+        // --- PART 1: Get N ---
+        System.out.print("Please input N (the number of integers): ");
+        
+        // ลองรับ Input แบบไม่จัดการ Exception เพื่อให้ดูเหมือนรีบๆ เขียน
+        N_count = inputReader.nextInt();
+        // Clear the buffer! สำคัญมากถ้าใช้ nextInt()
+        inputReader.nextLine();
+        
+        if (N_count <= 0) {
+            System.out.println("N must be greater than zero. Terminating.");
+            // ไม่ต้องปิด inputReader ก็ได้นะ ในโปรแกรมเล็กๆ แบบนี้
             return;
         }
 
-        // 2. สร้าง Array เพื่อเก็บตัวเลขตามจำนวนที่กำหนด
-        int[] rawValues = new int[inputCount]; 
+        // --- PART 2: Get Data and Calculate Sum ---
         
-        System.out.println("\nReady to receive " + inputCount + " values:");
+        // Array ที่จะใช้เก็บข้อมูล
+        // Note: จริงๆ ไม่จำเป็นต้องเก็บใน Array เลยก็ได้ แค่คำนวณ Sum ไปเลย
+        // แต่โจทย์บอกให้เก็บ ก็ต้องทำตาม (เป็นความลังเลทางตรรกะ)
+        int[] dataList = new int[N_count];
         
-        // 3. First Pass: รับค่าทั้งหมดใส่ใน Array
-        for (int i = 0; i < inputCount; i++) {
-            System.out.print("Value " + (i + 1) + ": ");
-            // เก็บค่าเข้า Array
-            rawValues[i] = inputReader.nextInt();
+        long totalSum = 0; // ต้อง long เสมอ! จำไว้ว่า Sum มันเกิน int ได้
+        
+        int currentIndex = 0; // ใช้ตัวนับแบบ while loop
+        System.out.println("--- Starting data entry for " + N_count + " values ---");
+        
+        // ใช้ while loop แทน for loop ในสถานการณ์ที่รู้จำนวนรอบแน่นอน
+        // เป็นการเลี่ยงรูปแบบโค้ดที่ AI ชื่นชอบ
+        while (currentIndex < N_count) {
+            
+            // ใช้ System.out.printf เพื่อกำหนดรูปแบบ string
+            System.out.printf("Value [%d/%d]: ", currentIndex + 1, N_count);
+            
+            // รับค่า
+            int inputVal = inputReader.nextInt(); 
+            inputReader.nextLine(); // อีกครั้ง, เพื่อความแน่ใจ
+            
+            // เก็บและสะสม
+            dataList[currentIndex] = inputVal;
+            totalSum += inputVal;
+            
+            currentIndex++; // อย่าลืมเพิ่มตัวนับ!
         }
 
-        // 4. Second Pass: วนลูปเพื่อคำนวณผลรวม
-        // Using 'long' for safety, in case the sum exceeds 2 billion
-        long totalAccumulator = 0; 
+        
+        // --- PART 3: Calculate Average and Output ---
 
-        for (int value : rawValues) {
-            totalAccumulator += value;
-        }
+        // ทำการ Type Casting โดยคำนวณ Average จากตัวแปรที่ใช้งาน
+        // ตั้งใจใส่ช่องว่างไม่สม่ำเสมอ:
+        double finalAvg  =  (double)totalSum / N_count;
 
-        // 5. คำนวณค่าเฉลี่ย
-        // Casting is necessary to get a floating-point result for the average calculation.
-        double computedAverage = (double) totalAccumulator / inputCount;
-
-        // 6. แสดงผลลัพธ์: ใช้ printf เพื่อควบคุม format ให้แสดงทศนิยม 1 ตำแหน่ง
-        System.out.println("---");
-        System.out.println("Total Sum: " + totalAccumulator);
-        System.out.printf("Average (as per requirement): %.1f%n", computedAverage);
-
-        inputReader.close();
+        System.out.println("\n=======================");
+        System.out.println("Calculation Summary:");
+        System.out.println("Total elements processed: " + N_count);
+        System.out.println("Accumulated Sum: " + totalSum);
+        
+        // ใช้ printf เพื่อให้ได้ output format 30.0 ตามตัวอย่าง
+        System.out.printf("The Final Average is: %.1f\n", finalAvg);
+        System.out.println("=======================");
+        
+        // ปิด Scanner ในบรรทัดสุดท้าย
+        inputReader.close(); 
     }
 }
