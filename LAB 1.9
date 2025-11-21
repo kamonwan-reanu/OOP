@@ -1,52 +1,52 @@
 import java.util.Scanner;
 
-public class ArrayAverageCalculator {
+public class CustomArrayStats {
 
     public static void main(String[] args) {
-        // สร้างออบเจกต์ Scanner เพื่อรับข้อมูลจากผู้ใช้
-        Scanner scanner = new Scanner(System.in);
+        // ใช้ System.in โดยตรง ไม่ต้องสร้าง Scanner ใหม่หลายครั้ง
+        Scanner inputReader = new Scanner(System.in); 
 
-        // 1. รับค่า N (จำนวนของตัวเลขที่จะรับเข้ามา)
-        int N;
-        System.out.print("โปรดป้อนค่า N (จำนวนเต็มบวก): ");
-        N = scanner.nextInt();
+        // 1. รับค่า N (จำนวนของตัวเลข)
+        int inputCount; 
+        System.out.print("Enter the count of numbers (N): ");
+        inputCount = inputReader.nextInt();
 
-        // ตรวจสอบ N ต้องเป็นจำนวนเต็มบวก
-        if (N <= 0) {
-            System.out.println("N ต้องเป็นจำนวนเต็มบวก โปรดลองใหม่อีกครั้ง");
-            scanner.close();
-            return; // จบการทำงานของโปรแกรม
+        // Basic validation: must be a positive count
+        if (inputCount <= 0) {
+            System.out.println("Error: N must be a positive integer.");
+            inputReader.close();
+            return;
         }
 
-        // 2. สร้าง Array เพื่อเก็บตัวเลข N จำนวน
-        int[] numbers = new int[N];
+        // 2. สร้าง Array เพื่อเก็บตัวเลขตามจำนวนที่กำหนด
+        int[] rawValues = new int[inputCount]; 
         
-        // ตัวแปรสำหรับเก็บผลรวมของตัวเลขทั้งหมดใน Array
-        long sum = 0; // ใช้ long เพื่อป้องกัน Integer Overflow หาก N และตัวเลขมีค่ามาก
-
-        System.out.println("---");
-        System.out.println("โปรดป้อนตัวเลข " + N + " ตัว (เป็นจำนวนเต็ม):");
+        System.out.println("\nReady to receive " + inputCount + " values:");
         
-        // 3. วนลูปเพื่อรับค่าตัวเลข N จำนวน และคำนวณผลรวม
-        for (int i = 0; i < N; i++) {
-            System.out.print("ตัวเลขที่ " + (i + 1) + ": ");
-            numbers[i] = scanner.nextInt();
-            
-            // บวกค่าที่รับเข้ามาในผลรวม
-            sum += numbers[i];
+        // 3. First Pass: รับค่าทั้งหมดใส่ใน Array
+        for (int i = 0; i < inputCount; i++) {
+            System.out.print("Value " + (i + 1) + ": ");
+            // เก็บค่าเข้า Array
+            rawValues[i] = inputReader.nextInt();
         }
 
-        // 4. คำนวณค่าเฉลี่ย
-        // การหารด้วย (double)N จะทำให้ผลลัพธ์เป็นทศนิยมตามที่โจทย์ต้องการ
-        double average = (double) sum / N;
+        // 4. Second Pass: วนลูปเพื่อคำนวณผลรวม
+        // Using 'long' for safety, in case the sum exceeds 2 billion
+        long totalAccumulator = 0; 
 
-        // 5. แสดงผลลัพธ์
+        for (int value : rawValues) {
+            totalAccumulator += value;
+        }
+
+        // 5. คำนวณค่าเฉลี่ย
+        // Casting is necessary to get a floating-point result for the average calculation.
+        double computedAverage = (double) totalAccumulator / inputCount;
+
+        // 6. แสดงผลลัพธ์: ใช้ printf เพื่อควบคุม format ให้แสดงทศนิยม 1 ตำแหน่ง
         System.out.println("---");
-        System.out.println("ผลรวมของตัวเลขทั้งหมดคือ: " + sum);
-        System.out.println("จำนวนตัวเลขที่รับเข้ามา (N): " + N);
-        System.out.printf("ค่าเฉลี่ย (Average) คือ: %.1f%n", average); // ใช้ printf เพื่อกำหนดทศนิยม 1 ตำแหน่งตามตัวอย่าง Output (30.0)
+        System.out.println("Total Sum: " + totalAccumulator);
+        System.out.printf("Average (as per requirement): %.1f%n", computedAverage);
 
-        // ปิด Scanner
-        scanner.close();
+        inputReader.close();
     }
 }
