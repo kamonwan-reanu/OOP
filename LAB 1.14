@@ -1,0 +1,57 @@
+import java.util.Scanner;
+
+public class Minesweeper {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        // รับขนาดแผนที่
+        int rows = scanner.nextInt();
+        int cols = scanner.nextInt();
+        
+        // สร้างและเติมข้อมูลแผนที่
+        char[][] map = new char[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                map[i][j] = scanner.next().charAt(0);
+            }
+        }
+        
+        // รับพิกัดเป้าหมาย
+        int targetR = scanner.nextInt();
+        int targetC = scanner.nextInt();
+        
+        // ตรวจสอบว่าคลิกโดนระเบิดหรือไม่
+        if (map[targetR][targetC] == '*') {
+            System.out.println("Mine");
+        } else {
+            // นับจำนวนระเบิดรอบข้าง 8 ทิศทาง
+            int count = countAdjacentMines(map, targetR, targetC, rows, cols);
+            System.out.println(count);
+        }
+        
+        scanner.close();
+    }
+    
+    // ฟังก์ชันนับระเบิดรอบข้าง 8 ทิศทาง
+    static int countAdjacentMines(char[][] map, int row, int col, int rows, int cols) {
+        int count = 0;
+        
+        // ทิศทางทั้ง 8: บน, ล่าง, ซ้าย, ขวา, และแนวทแยง 4 มุม
+        int[] dRow = {-1, -1, -1, 0, 0, 1, 1, 1};
+        int[] dCol = {-1, 0, 1, -1, 1, -1, 0, 1};
+        
+        for (int i = 0; i < 8; i++) {
+            int newRow = row + dRow[i];
+            int newCol = col + dCol[i];
+            
+            // ตรวจสอบขอบเขต (Boundary check)
+            if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols) {
+                if (map[newRow][newCol] == '*') {
+                    count++;
+                }
+            }
+        }
+        
+        return count;
+    }
+}
