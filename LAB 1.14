@@ -3,43 +3,53 @@ import java.util.Scanner;
 public class Minesweeper {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        
-        int r = sc.nextInt();
-        int c = sc.nextInt();
-        
-        char[][] grid = new char[r][c];
-        
-        for (int i = 0; i < r; i++) {
-            for (int j = 0; j < c; j++) {
-                grid[i][j] = sc.next().charAt(0);
+
+        int rows = sc.nextInt();
+        int cols = sc.nextInt();
+        sc.nextLine();
+
+        char[][] map = new char[rows][cols];
+
+        for (int i = 0; i < rows; i++) {
+            String line = sc.nextLine();
+            for (int j = 0; j < cols; j++) {
+                map[i][j] = line.charAt(j);
             }
         }
-        
-        int tr = sc.nextInt();
-        int tc = sc.nextInt();
-        
-        if (grid[tr][tc] == '*') {
+
+        int targetR = sc.nextInt();
+        int targetC = sc.nextInt();
+
+        if (map[targetR][targetC] == '*') {
             System.out.println("Mine");
-        } 
-        else {
-            int bomb = 0;
-            
-            for (int i = tr - 1; i <= tr + 1; i++) {
-                for (int j = tc - 1; j <= tc + 1; j++) {
-                    if (i == tr && j == tc) {
-                        continue;
-                    }
-                    if (i >= 0 && i < r && j >= 0 && j < c) {
-                        if (grid[i][j] == '*') {
-                            bomb++;
-                        }
-                    }
-                }
-            }
-            
-            System.out.println(bomb);
+        } else {
+            int count = countMinesAround(map, targetR, targetC, rows, cols);
+            System.out.println(count);
         }
         
         sc.close();
+    }
+
+    static int countMinesAround(char[][] map, int r, int c, int maxRow, int maxCol) {
+        int mineCount = 0;
+
+        for (int dr = -1; dr <= 1; dr++) {
+            for (int dc = -1; dc <= 1; dc++) {
+                if (dr == 0 && dc == 0) {
+                    continue;
+                }
+                
+                int newR = r + dr;
+                int newC = c + dc;
+
+                if (newR >= 0 && newR < maxRow && newC >= 0 && newC < maxCol) {
+                    if (map[newR][newC] == '*') {
+                        mineCount++;
+                    }
+                }
+            }
+        }
+        
+        return mineCount;
     }
 }
