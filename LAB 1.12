@@ -1,106 +1,36 @@
-import java.util.HashMap;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class InventoryManagement {
-
-    /**
-     * ฟังก์ชันหลักสำหรับจัดการระบบสินค้าคงคลังเบื้องต้น
-     */
-    public static void solve() {
-        // ใช้ Scanner สำหรับอ่าน input จาก System.in
-        Scanner scanner = new Scanner(System.in);
-        
-        // HashMap สำหรับเก็บสินค้าคงคลัง: {Product ID: Stock Quantity}
-        // Product ID และ Stock Quantity เป็น Integer ทั้งคู่
-        HashMap<Integer, Integer> inventory = new HashMap<>();
-
-        try {
-            // 1. รับจำนวนสินค้า N (จำนวนชนิดของสินค้า)
-            System.out.println("Enter N (number of product types):");
-            // เราจะอ่านแค่ตัวเลขแรกในบรรทัดเพื่อรองรับ input ที่มีคำอธิบายตาม Test Case
-            int N = scanner.nextInt(); 
-            scanner.nextLine(); // ล้าง buffer ที่เหลือหลังจาก nextInt()
-
-            // 2. วนลูป N รอบเพื่อรับข้อมูลสินค้า
-            System.out.println("Enter Product ID and Stock Quantity for " + N + " types:");
-            for (int i = 0; i < N; i++) {
-                int productId;
-                int stockQuantity;
-
-                // รับ Product ID
-                // อ่านบรรทัดทั้งหมดเพื่อรองรับ input ที่มีคำอธิบาย (เช่น 101 (ID ชิ้นที่ 1))
-                System.out.print("  Enter ID for item " + (i + 1) + ": ");
-                String idLine = scanner.nextLine().trim();
-                productId = parseIntegerFromInput(idLine);
-                
-                // รับ Stock Quantity
-                System.out.print("  Enter Stock for item " + (i + 1) + ": ");
-                String stockLine = scanner.nextLine().trim();
-                stockQuantity = parseIntegerFromInput(stockLine);
-                
-                // ตรวจสอบว่าได้ค่าที่ถูกต้องหรือไม่
-                if (productId < 0 || stockQuantity < 0) {
-                     System.err.println("Skipping invalid input for item " + (i + 1) + ".");
-                     continue; // ข้ามการประมวลผลสำหรับ input ที่ผิดพลาด
-                }
-                
-                // จัดเก็บข้อมูลลงใน HashMap
-                inventory.put(productId, stockQuantity);
-            }
-
-            // 3. รับรหัสสินค้าที่ต้องการค้นหา (Search ID)
-            System.out.println("\nEnter the Product ID to search:");
-            int searchId = parseIntegerFromInput(scanner.nextLine().trim());
-            
-            if (searchId < 0) {
-                 System.err.println("Invalid Search ID entered.");
-                 return;
-            }
-
-            // 4. ค้นหาสินค้า
-            // ใช้ .getOrDefault(key, defaultValue) เพื่อจัดการกรณีไม่พบ key
-            // ถ้าพบ จะได้ quantity, ถ้าไม่พบ จะได้ 0
-            int stockFound = inventory.getOrDefault(searchId, 0);
-
-            // 5. แสดงผลลัพธ์
-            if (stockFound > 0) {
-                // ถ้าเจอ ให้แสดง "จำนวนคงคลัง"
-                System.out.println("\nOutput:");
-                System.out.println(stockFound);
-            } else {
-                // ถ้าไม่เจอ (quantity == 0) ให้แสดง "Product [Search ID] not found"
-                System.out.println("\nOutput:");
-                System.out.println("Product " + searchId + " not found");
-            }
-
-        } catch (InputMismatchException e) {
-            System.err.println("Error: Invalid input format. Please ensure all inputs are numbers.");
-        } catch (Exception e) {
-            System.err.println("An unexpected error occurred: " + e.getMessage());
-        } finally {
-            // ปิด Scanner เพื่อคืนทรัพยากร
-            scanner.close();
-        }
-    }
     
-    /**
-     * Helper method เพื่อดึงตัวเลขจากบรรทัด input ที่อาจมีคำอธิบาย
-     * เช่น input "101 (ID ชิ้นที่ 1)" จะคืนค่า 101
-     */
-    private static int parseIntegerFromInput(String inputLine) {
-        try {
-            // แยกส่วนที่อยู่หน้าวงเล็บ (ถ้ามี) แล้วตัดช่องว่างออก และแปลงเป็น Integer
-            String numberString = inputLine.split("\\(")[0].trim();
-            return Integer.parseInt(numberString);
-        } catch (NumberFormatException e) {
-            // กรณีที่ไม่สามารถแปลงเป็นตัวเลขได้
-            return -1; // คืนค่าติดลบเพื่อระบุข้อผิดพลาด
-        }
-    }
-
-    // จุดเริ่มต้นของการรันโปรแกรม
     public static void main(String[] args) {
-        solve();
+        Scanner input = new Scanner(System.in);
+        
+        int totalProducts = input.nextInt();
+
+        int[] productIds = new int[totalProducts];
+        int[] stockQuantities = new int[totalProducts];
+
+        for (int i = 0; i < totalProducts; i++) {
+            productIds[i] = input.nextInt();
+            stockQuantities[i] = input.nextInt();
+        }
+
+        int searchId = input.nextInt();
+
+        int foundIndex = -1;
+        for (int i = 0; i < totalProducts; i++) {
+            if (productIds[i] == searchId) {
+                foundIndex = i;
+                break;
+            }
+        }
+
+        if (foundIndex != -1) {
+            System.out.println(stockQuantities[foundIndex]);
+        } else {
+            System.out.println("Product " + searchId + " not found");
+        }
+        
+        input.close();
     }
 }
