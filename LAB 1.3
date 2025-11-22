@@ -1,36 +1,23 @@
 import java.util.Scanner;
 
-/**
- * โค้ดที่แก้ไขสำหรับรันบน Online GDB หรือ IDEs ที่ใช้ชื่อไฟล์หลักเป็น Main.java
- * - เปลี่ยนชื่อคลาสจาก EvenOddChecker เป็น Main
- */
 public class Main {
 
     public static void main(String[] args) {
-        // สร้างวัตถุ Scanner เพื่อรับข้อมูลนำเข้า
         Scanner scanner = new Scanner(System.in);
-
-        // แสดงข้อความแจ้งเตือนให้ผู้ใช้ป้อนจำนวนเต็ม
-        // ใน Online GDB บางครั้งอาจไม่จำเป็นต้องแสดงข้อความนี้
-        // แต่จะทำให้โค้ดมีความสมบูรณ์ยิ่งขึ้น
         System.out.print("Enter an integer: "); 
 
-        // ตรวจสอบว่าข้อมูลนำเข้าเป็นจำนวนเต็มที่ถูกต้องหรือไม่
         if (scanner.hasNextInt()) {
             int number = scanner.nextInt();
 
-            // ตรวจสอบว่าเป็นเลขคู่หรือเลขคี่โดยใช้ตัวดำเนินการ Modulus (%)
             if (number % 2 == 0) {
                 System.out.println("Even");
             } else {
                 System.out.println("Odd");
             }
         } else {
-            // กรณีผู้ใช้ป้อนข้อมูลที่ไม่ใช่จำนวนเต็ม
             System.out.println("Invalid input. Please enter a whole number.");
         }
 
-        // ปิดวัตถุ Scanner
         scanner.close();
     }
 }
