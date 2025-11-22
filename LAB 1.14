@@ -2,48 +2,44 @@ import java.util.Scanner;
 
 public class Minesweeper {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
         
-        int rows = scanner.nextInt();
-        int cols = scanner.nextInt();
+        int r = sc.nextInt();
+        int c = sc.nextInt();
         
-        char[][] map = new char[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                map[i][j] = scanner.next().charAt(0);
+        char[][] grid = new char[r][c];
+        
+        for (int i = 0; i < r; i++) {
+            for (int j = 0; j < c; j++) {
+                grid[i][j] = sc.next().charAt(0);
             }
         }
         
-        int targetR = scanner.nextInt();
-        int targetC = scanner.nextInt();
+        int tr = sc.nextInt();
+        int tc = sc.nextInt();
         
-        if (map[targetR][targetC] == '*') {
+        if (grid[tr][tc] == '*') {
             System.out.println("Mine");
-        } else {
-            int count = countAdjacentMines(map, targetR, targetC, rows, cols);
-            System.out.println(count);
-        }
-        
-        scanner.close();
-    }
-
-    static int countAdjacentMines(char[][] map, int row, int col, int rows, int cols) {
-        int count = 0;
-        
-        int[] dRow = {-1, -1, -1, 0, 0, 1, 1, 1};
-        int[] dCol = {-1, 0, 1, -1, 1, -1, 0, 1};
-        
-        for (int i = 0; i < 8; i++) {
-            int newRow = row + dRow[i];
-            int newCol = col + dCol[i];
+        } 
+        else {
+            int bomb = 0;
             
-            if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols) {
-                if (map[newRow][newCol] == '*') {
-                    count++;
+            for (int i = tr - 1; i <= tr + 1; i++) {
+                for (int j = tc - 1; j <= tc + 1; j++) {
+                    if (i == tr && j == tc) {
+                        continue;
+                    }
+                    if (i >= 0 && i < r && j >= 0 && j < c) {
+                        if (grid[i][j] == '*') {
+                            bomb++;
+                        }
+                    }
                 }
             }
+            
+            System.out.println(bomb);
         }
         
-        return count;
+        sc.close();
     }
 }
