@@ -1,52 +1,17 @@
 import java.util.Scanner;
 
-public class Main {
-
-    // เมธอดสำหรับคำนวณพื้นที่โดยเฉพาะ
-    public static double calculateArea(double w, double h) {
-        // สูตรคำนวณพื้นที่สี่เหลี่ยมผืนผ้า
-        return w * h;
-    }
-
-    // เมธอดสำหรับรับค่า Input พร้อมการตรวจสอบความถูกต้อง
-    public static double getInput(Scanner scanner, String prompt) {
-        double value = -1.0;
-        while (value < 0) {
-            System.out.println("ป้อนค่า " + prompt + " (ต้องเป็นตัวเลขบวก): ");
-            if (scanner.hasNextDouble()) {
-                value = scanner.nextDouble();
-                if (value < 0) {
-                    System.out.println("❌ ข้อผิดพลาด: ค่าต้องไม่เป็นลบ");
-                }
-            } else {
-                System.out.println("❌ ข้อผิดพลาด: กรุณาป้อนตัวเลขเท่านั้น");
-                scanner.next(); // ล้าง Input ที่ผิด
-            }
-        }
-        return value;
-    }
-
+public class RectangleArea {
+    
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner input = new Scanner(System.in);
         
-        // **เพิ่มการแจ้งเตือนเพื่อแสดงพฤติกรรมการทำงาน (Evidence behavior)**
-        System.out.println("--- โปรแกรมคำนวณพื้นที่สี่เหลี่ยมผืนผ้า ---"); 
+        double width = input.nextDouble();
+        double height = input.nextDouble();
         
-        // รับค่าความกว้าง (Width) ด้วยการตรวจสอบ
-        double width = getInput(scanner, "ความกว้าง (Width)");
-
-        // รับค่าความสูง (Height) ด้วยการตรวจสอบ
-        double height = getInput(scanner, "ความสูง (Height)");
-
-        // คำนวณพื้นที่ (Area) โดยเรียกใช้เมธอดที่แยกไว้
-        double area = calculateArea(width, height);
-
-        // แสดงผลลัพธ์
-        System.out.println("\n✅ ผลลัพธ์:");
-        System.out.println("ความกว้าง: " + width);
-        System.out.println("ความสูง: " + height);
-        System.out.println("พื้นที่ (Area) คือ: " + area);
+        double area = width * height;
         
-        scanner.close();
+        System.out.println(area);
+        
+        input.close();
     }
 }
