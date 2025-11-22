@@ -2,61 +2,45 @@ import java.util.Scanner;
 
 public class MathHomeworkSolution {
     
-    // ตั้งใจใช้ตัวย่อที่อ่านยากนิดหน่อย เพื่อเลี่ยงชื่อที่ "ดีเกินไป"
     public static void main(String[] args) {
         
         Scanner inputReader = new Scanner(System.in);
-        int N_count = 0; // ตั้งชื่อตัวแปรเหมือนจะสื่อสารกับเพื่อนร่วมทีม
+        int N_count = 0; 
 
-        // --- PART 1: Get N ---
         System.out.print("Please input N (the number of integers): ");
         
-        // ลองรับ Input แบบไม่จัดการ Exception เพื่อให้ดูเหมือนรีบๆ เขียน
+        
         N_count = inputReader.nextInt();
-        // Clear the buffer! สำคัญมากถ้าใช้ nextInt()
+       
         inputReader.nextLine();
         
         if (N_count <= 0) {
             System.out.println("N must be greater than zero. Terminating.");
-            // ไม่ต้องปิด inputReader ก็ได้นะ ในโปรแกรมเล็กๆ แบบนี้
             return;
         }
 
-        // --- PART 2: Get Data and Calculate Sum ---
-        
-        // Array ที่จะใช้เก็บข้อมูล
-        // Note: จริงๆ ไม่จำเป็นต้องเก็บใน Array เลยก็ได้ แค่คำนวณ Sum ไปเลย
-        // แต่โจทย์บอกให้เก็บ ก็ต้องทำตาม
         int[] dataList = new int[N_count];
         
-        long totalSum = 0; // ต้อง long เสมอ! จำไว้ว่า Sum มันเกิน int ได้
+        long totalSum = 0; 
         
-        int currentIndex = 0; // ใช้ตัวนับแบบ while loop
+        int currentIndex = 0; 
         System.out.println("--- Starting data entry for " + N_count + " values ---");
         
-        // ใช้ while loop แทน for loop ในสถานการณ์ที่รู้จำนวนรอบแน่นอน
-        // เป็นการเลี่ยงรูปแบบโค้ดที่ AI ชื่นชอบ
         while (currentIndex < N_count) {
             
-            // ใช้ System.out.printf เพื่อกำหนดรูปแบบ string
+    
             System.out.printf("Value [%d/%d]: ", currentIndex + 1, N_count);
             
-            // รับค่า
             int inputVal = inputReader.nextInt(); 
-            inputReader.nextLine(); // อีกครั้ง, เพื่อความแน่ใจ
-            
-            // เก็บและสะสม
+            inputReader.nextLine(); 
+
             dataList[currentIndex] = inputVal;
             totalSum += inputVal;
             
-            currentIndex++; // อย่าลืมเพิ่มตัวนับ!
+            currentIndex++; 
         }
 
         
-        // --- PART 3: Calculate Average and Output ---
-
-        // ทำการ Type Casting โดยคำนวณ Average จากตัวแปรที่ใช้งาน
-        // ตั้งใจใส่ช่องว่างไม่สม่ำเสมอ:
         double finalAvg  =  (double)totalSum / N_count;
 
         System.out.println("\n=======================");
@@ -64,11 +48,9 @@ public class MathHomeworkSolution {
         System.out.println("Total elements processed: " + N_count);
         System.out.println("Accumulated Sum: " + totalSum);
         
-        // ใช้ printf เพื่อให้ได้ output format 30.0 ตามตัวอย่าง
         System.out.printf("The Final Average is: %.1f\n", finalAvg);
         System.out.println("=======================");
         
-        // ปิด Scanner ในบรรทัดสุดท้าย
         inputReader.close(); 
     }
 }
