@@ -1,85 +1,32 @@
 import java.util.Scanner;
 
-/**
- * คลาส ArraySummer มีเมธอดสำหรับคำนวณผลรวมของสมาชิกใน Array 
- * และเมธอด main สำหรับการรับค่าและการเรียกใช้งาน.
- */
-public class ArraySummer {
+public class SumArray {
 
-    /**
-     * คำนวณผลรวมของตัวเลขทั้งหมดที่อยู่ใน Array จำนวนเต็ม.
-     * * @param numbers Array ของจำนวนเต็ม (int[])
-     * @return ผลรวม (sum) ของตัวเลขทั้งหมดใน Array เป็นค่า int
-     */
     public static int sumArray(int[] numbers) {
-        // ตรวจสอบว่า Array เป็น null หรือไม่ เพื่อป้องกัน NullPointerException
-        if (numbers == null) {
-            return 0;
+        int total = 0;
+        
+        for (int i = 0; i < numbers.length; i++) {
+            total = total + numbers[i];
         }
-
-        int sum = 0;
-        // วนลูปผ่านสมาชิกทั้งหมดใน Array
-        for (int number : numbers) {
-            sum += number;
-        }
-        return sum;
+        
+        return total;
     }
 
-    /**
-     * เมธอด main สำหรับรับค่าขนาด Array (N), รับค่าสมาชิก Array N ตัว 
-     * และเรียกใช้เมธอด sumArray เพื่อแสดงผลรวม.
-     * * @param args arguments ที่ส่งมาจาก command line (ไม่ได้ใช้ในตัวอย่างนี้)
-     */
     public static void main(String[] args) {
-        // ใช้ Scanner สำหรับรับ Input จากผู้ใช้
-        Scanner scanner = new Scanner(System.in);
+        Scanner input = new Scanner(System.in);
         
-        System.out.println("--- โปรแกรมคำนวณผลรวมใน Array ---");
-
-        // 1. รับค่าจำนวนเต็ม N (ขนาดของ Array)
-        int N;
-        while (true) {
-            try {
-                System.out.print("ป้อนจำนวนเต็ม N (ขนาดของ Array): ");
-                N = scanner.nextInt();
-                if (N >= 1) { // โจทย์ระบุว่า N คือจำนวนตัวเลขที่จะรับ (N>=1)
-                    break;
-                } else {
-                    System.out.println("N ต้องเป็นจำนวนเต็มบวก (>= 1)");
-                }
-            } catch (java.util.InputMismatchException e) {
-                System.out.println("กรุณาป้อนเฉพาะตัวเลขจำนวนเต็ม");
-                scanner.next(); // เคลียร์ input ที่ผิดพลาด
-            }
-        }
-
-        // 2. สร้าง Array ขนาด N
-        int[] numbers = new int[N];
+        int n = input.nextInt();
         
-        System.out.println("กรุณาป้อนค่าจำนวนเต็ม " + N + " ค่า:");
-
-        // 3. รับค่าจำนวนเต็ม N ค่า และเก็บไว้ใน Array
-        for (int i = 0; i < N; i++) {
-            while (true) {
-                try {
-                    System.out.print("ค่าที่ " + (i + 1) + ": ");
-                    numbers[i] = scanner.nextInt();
-                    break;
-                } catch (java.util.InputMismatchException e) {
-                    System.out.println("กรุณาป้อนเฉพาะตัวเลขจำนวนเต็ม");
-                    scanner.next(); // เคลียร์ input ที่ผิดพลาด
-                }
-            }
+        int[] myArray = new int[n];
+        
+        for (int i = 0; i < n; i++) {
+            myArray[i] = input.nextInt();
         }
         
-        // ปิด Scanner เมื่อเสร็จสิ้นการใช้งาน
-        scanner.close();
-
-        // 4. เรียกใช้ฟังก์ชัน sumArray
-        int totalSum = sumArray(numbers);
-
-        // 5. นำค่าผลลัพธ์ที่ได้มาแสดงผล
-        System.out.println("\n--- ผลลัพธ์ ---");
-        System.out.println("ผลรวมของตัวเลขใน Array: " + totalSum);
+        int result = sumArray(myArray);
+        
+        System.out.println(result);
+        
+        input.close();
     }
 }
