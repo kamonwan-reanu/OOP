@@ -1,33 +1,22 @@
 import java.util.Scanner;
 
-public class RectangleArea {
+public class CalculateArea {
+
     public static double calculateArea(double width, double height) {
-        return width * height;
+        double area = width * height;
+        return area;
     }
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner input = new Scanner(System.in);
 
-        System.out.print("โปรดป้อนความกว้าง (width) เป็น double: ");
-        if (!scanner.hasNextDouble()) {
-            System.err.println("❌ ข้อผิดพลาด: อินพุตสำหรับความกว้างไม่ถูกต้อง โปรดป้อนตัวเลขทศนิยม");
-            return; 
-        }
-        double width = scanner.nextDouble();
+        double width = input.nextDouble();
+        double height = input.nextDouble();
 
-        System.out.print("โปรดป้อนความสูง (height) เป็น double: ");
-        if (!scanner.hasNextDouble()) {
-            System.err.println("❌ ข้อผิดพลาด: อินพุตสำหรับความสูงไม่ถูกต้อง โปรดป้อนตัวเลขทศนิยม");
-            return; 
-        }
-        double height = scanner.nextDouble();
-        double areaResult = calculateArea(width, height);
+        double result = calculateArea(width, height);
 
-        System.out.println("--- ผลลัพธ์ ---");
-        System.out.println("ความกว้างที่ป้อน: " + width);
-        System.out.println("ความสูงที่ป้อน: " + height);
-        System.out.println("✅ พื้นที่สี่เหลี่ยมผืนผ้า (Area): " + areaResult);
+        System.out.println(result);
 
-        scanner.close(); 
+        input.close();
     }
 }
