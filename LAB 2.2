@@ -1,0 +1,34 @@
+import java.util.Scanner;
+
+public class Main {
+    
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        String studentId = scanner.nextLine().trim();
+        String studentName = scanner.nextLine().trim();
+        
+        Student student = new Student(studentId, studentName);
+        
+        student.displayInfo();
+        
+        scanner.close();
+    }
+}
+
+class Student {
+    
+    private String studentId;
+    private String name;
+    
+    
+    public Student(String studentId, String name) {
+        this.studentId = studentId;
+        this.name = name;
+    }
+    
+    public void displayInfo() {
+        System.out.println(this.studentId);
+        System.out.println(this.name);
+    }
+}
