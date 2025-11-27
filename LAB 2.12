@@ -1,0 +1,59 @@
+public class Course {
+    private String courseId;
+    private String courseName;
+    
+    public Course(String courseId, String courseName) {
+        this.courseId = courseId;
+        this.courseName = courseName;
+    }
+    
+    public String getCourseInfo() {
+        return "[" + courseId + "]: [" + courseName + "]";
+    }
+    
+    public String getCourseId() {
+        return courseId;
+    }
+    
+    public String getCourseName() {
+        return courseName;
+    }
+}
+
+
+public class Student {
+    private String studentName;
+    private Course enrolledCourse;
+    
+    public Student(String studentName, Course enrolledCourse) {
+        this.studentName = studentName;
+        this.enrolledCourse = enrolledCourse;
+    }
+    
+    public void displayEnrollment() {
+        System.out.println("Student: " + studentName);
+        System.out.println("Enrolled in: " + enrolledCourse.getCourseInfo());
+    }
+    
+    public String getStudentName() {
+        return studentName;
+    }
+    
+    public Course getEnrolledCourse() {
+        return enrolledCourse;
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        String courseId = "ENGCE174";
+        String courseName = "Object Oriented Programming";
+        String studentName = "Somsak Jaidee";
+        
+        Course course = new Course(courseId, courseName);
+        Student student = new Student(studentName, course);
+        
+        student.displayEnrollment();
+    }
+}
