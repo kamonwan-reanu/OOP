@@ -1,0 +1,77 @@
+public class DatabaseConnection {
+    
+    private String connectionString;
+    private boolean connected;
+    
+    
+    public DatabaseConnection(String connectionString) {
+        this.connectionString = connectionString;
+        this.connected = false;
+    }
+    
+    
+    public boolean isConnected() {
+        return connected;
+    }
+    
+    
+    public void connect() {
+        if (connected) {
+            System.out.println("Already connected.");
+            return;
+        }
+        
+        connected = true;
+        System.out.println("Connected to " + connectionString);
+    }
+    
+    
+    public void disconnect() {
+        if (!connected) {
+            System.out.println("Already disconnected.");
+            return;
+        }
+        
+        connected = false;
+        System.out.println("Disconnected.");
+    }
+    
+    
+    public static void main(String[] args) {
+        System.out.println("========== Test Case 1 ==========");
+        testCase1();
+        
+        System.out.println("\n========== Test Case 2 ==========");
+        testCase2();
+        
+        System.out.println("\n========== Test Case 3 ==========");
+        testCase3();
+    }
+    
+    
+    private static void testCase1() {
+        DatabaseConnection db = new DatabaseConnection("ProdDB_Server");
+        db.connect();
+        db.disconnect();
+        db.disconnect();
+        System.out.println(db.isConnected());
+    }
+    
+    
+    private static void testCase2() {
+        DatabaseConnection db = new DatabaseConnection("TestDB_Localhost");
+        db.connect();
+        db.disconnect();
+        db.disconnect();
+        System.out.println(db.isConnected());
+    }
+    
+    
+    private static void testCase3() {
+        DatabaseConnection db = new DatabaseConnection("Backup_Server");
+        db.connect();
+        db.disconnect();
+        db.disconnect();
+        System.out.println(db.isConnected());
+    }
+}
