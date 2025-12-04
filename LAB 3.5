@@ -35,4 +35,20 @@ public class DatabaseConnection {
         connected = false;
         System.out.println("Disconnected.");
     }
+    
+    
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            System.out.println("Usage: java DatabaseConnection <connectionString>");
+            return;
+        }
+        
+        String connectionString = args[0];
+        DatabaseConnection db = new DatabaseConnection(connectionString);
+        
+        db.connect();
+        db.disconnect();
+        db.disconnect();
+        System.out.println(db.isConnected());
+    }
 }
