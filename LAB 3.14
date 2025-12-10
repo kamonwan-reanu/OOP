@@ -1,0 +1,97 @@
+class BankAccount {
+    
+    private double balance;
+    private static int totalTransactionCount = 0;
+    
+    public BankAccount(double initialDeposit) {
+        if (initialDeposit > 0) {
+            this.balance = initialDeposit;
+            System.out.println("Account created.");
+        } else {
+            this.balance = 0;
+            System.out.println("Account created.");
+        }
+    }
+    
+    public double getBalance() {
+        return this.balance;
+    }
+    
+    public void deposit(double amount) {
+        if (amount > 0) {
+            this.balance += amount;
+            totalTransactionCount++;
+            System.out.println("Deposit successful.");
+        } else {
+            System.out.println("Invalid amount.");
+        }
+    }
+    
+    public void withdraw(double amount) {
+        if (amount <= 0) {
+            System.out.println("Invalid amount.");
+        } else if (amount > this.balance) {
+            System.out.println("Insufficient funds.");
+        } else {
+            this.balance -= amount;
+            totalTransactionCount++;
+            System.out.println("Withdrawal successful.");
+        }
+    }
+    
+    public static int getTotalTransactionCount() {
+        return totalTransactionCount;
+    }
+}
+
+public class Main {
+    
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        BankAccount myAccount = null;
+        int n = scanner.nextInt();
+        scanner.nextLine();
+        
+        for (int i = 0; i < n; i++) {
+            String command = scanner.nextLine().trim();
+            
+            if (command.equals("CREATE")) {
+                double initialDeposit = scanner.nextDouble();
+                scanner.nextLine();
+                myAccount = new BankAccount(initialDeposit);
+                
+            } else if (command.equals("DEPOSIT")) {
+                double amount = scanner.nextDouble();
+                scanner.nextLine();
+                
+                if (myAccount == null) {
+                    System.out.println("No account exists.");
+                } else {
+                    myAccount.deposit(amount);
+                }
+                
+            } else if (command.equals("WITHDRAW")) {
+                double amount = scanner.nextDouble();
+                scanner.nextLine();
+                
+                if (myAccount == null) {
+                    System.out.println("No account exists.");
+                } else {
+                    myAccount.withdraw(amount);
+                }
+                
+            } else if (command.equals("STATUS")) {
+                if (myAccount == null) {
+                    System.out.println("No account exists.");
+                } else {
+                    System.out.printf("Balance: %.1f%n", myAccount.getBalance());
+                }
+                
+            } else if (command.equals("GLOBAL_STATUS")) {
+                System.out.println("Total Transactions: " + BankAccount.getTotalTransactionCount());
+            }
+        }
+        
+        scanner.close();
+    }
+}
