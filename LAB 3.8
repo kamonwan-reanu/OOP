@@ -1,0 +1,82 @@
+public class InventoryItem {
+    
+    private String productName;
+    private int stock;
+    
+    
+    public InventoryItem(String productName, int initialStock) {
+        this.productName = productName;
+        this.stock = (initialStock < 0) ? 0 : initialStock;
+    }
+    
+    
+    public String getProductName() {
+        return productName;
+    }
+    
+    public int getStock() {
+        return stock;
+    }
+    
+    
+    public void addStock(int amount) {
+        if (amount > 0) {
+            stock += amount;
+            System.out.println("Stock added.");
+        } else {
+            System.out.println("Invalid amount.");
+        }
+    }
+    
+    public void sellStock(int amount) {
+        if (amount <= 0) {
+            System.out.println("Invalid amount.");
+        } else if (amount > stock) {
+            System.out.println("Not enough stock.");
+        } else {
+            stock -= amount;
+            System.out.println("Sale successful.");
+        }
+    }
+    
+    
+    public void displayStock() {
+        System.out.println("Final Stock: " + stock);
+    }
+}
+
+
+public class Main {
+    
+    public static void main(String[] args) {
+        System.out.println("========== Test Case 1 ==========\n");
+        runTestCase1();
+        
+        System.out.println("\n========== Test Case 2 ==========\n");
+        runTestCase2();
+    }
+    
+    
+    private static void runTestCase1() {
+        InventoryItem laptop = new InventoryItem("Laptop", 10);
+        
+        laptop.addStock(2);
+        
+        laptop.displayStock();
+    }
+    
+    
+    private static void runTestCase2() {
+        InventoryItem mouse = new InventoryItem("Mouse", 5);
+        
+        mouse.sellStock(5);
+        mouse.sellStock(1);
+        
+        mouse.addStock(3);
+        
+        mouse.sellStock(4);
+        mouse.sellStock(2);
+        
+        mouse.displayStock();
+    }
+}
