@@ -1,0 +1,57 @@
+class Employee {
+    
+    private String name;
+    private double monthlySalary;
+    
+    public Employee(String name, double monthlySalary) {
+        this.name = name;
+        if (monthlySalary > 0) {
+            this.monthlySalary = monthlySalary;
+        } else {
+            this.monthlySalary = 0;
+        }
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public void giveRaise(double amount) {
+        if (amount > 0) {
+            monthlySalary += amount;
+            System.out.println("Raise applied.");
+        } else {
+            System.out.println("Invalid amount.");
+        }
+    }
+    
+    private double getAnnualSalary() {
+        return monthlySalary * 12;
+    }
+    
+    public double calculateTax(double taxRate) {
+        return getAnnualSalary() * taxRate;
+    }
+}
+
+
+public class Main {
+    
+    public static void main(String[] args) {
+        
+        String name = "Somsak";
+        double monthlySalary = 50000.0;
+        double taxRate = 0.10;
+        double raiseAmount = 5000.0;
+        
+        Employee emp = new Employee(name, monthlySalary);
+        
+        double taxBefore = emp.calculateTax(taxRate);
+        System.out.println("Tax (Before): " + taxBefore);
+        
+        emp.giveRaise(raiseAmount);
+        
+        double taxAfter = emp.calculateTax(taxRate);
+        System.out.println("Tax (After): " + taxAfter);
+    }
+}
