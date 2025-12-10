@@ -1,0 +1,75 @@
+class User {
+    private String username;
+    private String password;
+    private static int minPasswordLength = 8;
+
+    public User(String username, String password) {
+        this.username = username;
+        
+        if (password.length() >= minPasswordLength) {
+            this.password = password;
+            System.out.println("Creation successful.");
+        } else {
+            this.password = null;
+            System.out.println("Creation failed.");
+        }
+    }
+
+    public static void setMinLength(int length) {
+        if (length < 4) {
+            System.out.println("Invalid length.");
+        } else {
+            minPasswordLength = length;
+            System.out.println("New min length set to " + length);
+        }
+    }
+
+    public static int getMinLength() {
+        return minPasswordLength;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String newPassword) {
+        if (newPassword.length() >= minPasswordLength) {
+            this.password = newPassword;
+            System.out.println("Update successful.");
+        } else {
+            System.out.println("Update failed.");
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        User.setMinLength(10);
+        
+        User user1 = new User("user1", "pass1234567890");
+        
+        User user2 = new User("user2", "pass123");
+        
+        User.setMinLength(5);
+        
+        user2.setPassword("pass1234567890");
+        
+        System.out.println(user2.getPassword());
+        
+        user2.setPassword("pass567");
+        
+        System.out.println(user2.getPassword());
+        
+        System.out.println();
+        
+        User.setMinLength(2);
+        
+        User user3 = new User("user1", "pass1234");
+        
+        User user4 = new User("user2", "pass88888888");
+        
+        User.setMinLength(4);
+        
+        user4.setPassword("4");
+    }
+}
