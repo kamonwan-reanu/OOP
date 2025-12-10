@@ -1,0 +1,73 @@
+class SystemConfig {
+    
+    private static SystemConfig instance;
+    
+    private String serverUrl;
+    private int maxConnections;
+    
+    private SystemConfig() {
+        this.serverUrl = "default.server.com";
+        this.maxConnections = 10;
+    }
+    
+    public static SystemConfig getInstance() {
+        if (instance == null) {
+            instance = new SystemConfig();
+        }
+        return instance;
+    }
+    
+    public String getServerUrl() {
+        return serverUrl;
+    }
+    
+    public void setServerUrl(String url) {
+        this.serverUrl = url;
+    }
+    
+    public int getMaxConnections() {
+        return maxConnections;
+    }
+    
+    public void setMaxConnections(int count) {
+        if (count <= 0) {
+            System.out.println("Invalid count.");
+            return;
+        }
+        this.maxConnections = count;
+        System.out.println("Max connections set.");
+    }
+}
+
+public class Main {
+    
+    public static void main(String[] args) {
+        
+        if (args.length == 0) {
+            return;
+        }
+        
+        int n = Integer.parseInt(args[0]);
+        SystemConfig config = SystemConfig.getInstance();
+        
+        for (int i = 1; i <= n; i++) {
+            
+            String command = args[i];
+            
+            if (command.equals("SHOW")) {
+                System.out.println("URL: " + config.getServerUrl());
+                System.out.println("MAX: " + config.getMaxConnections());
+            }
+            else if (command.equals("SET_URL")) {
+                i++;
+                String url = args[i];
+                config.setServerUrl(url);
+            }
+            else if (command.equals("SET_MAX")) {
+                i++;
+                int count = Integer.parseInt(args[i]);
+                config.setMaxConnections(count);
+            }
+        }
+    }
+}
