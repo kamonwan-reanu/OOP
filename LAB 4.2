@@ -1,0 +1,38 @@
+class Product {
+    
+    private String name;
+    private double price;
+    
+    public Product(String name) {
+        this.name = name;
+        this.price = 0.0;
+    }
+    
+    public Product(String name, double price) {
+        this.name = name;
+        this.price = price;
+    }
+    
+    public void displayInfo() {
+        System.out.println("Product: " + name + ", Price: " + price);
+    }
+}
+
+public class Main {
+    
+    public static void main(String[] args) {
+        int choice = Integer.parseInt(args[0]);
+        String productName = args[1];
+        
+        Product product;
+        
+        if (choice == 1) {
+            product = new Product(productName);
+        } else {
+            double productPrice = Double.parseDouble(args[2]);
+            product = new Product(productName, productPrice);
+        }
+        
+        product.displayInfo();
+    }
+}
