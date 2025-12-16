@@ -1,0 +1,51 @@
+class Location {
+    private double latitude;
+    private double longitude;
+
+    public Location(double latitude, double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
+    public Location(Location other) {
+        this.latitude = other.latitude;
+        this.longitude = other.longitude;
+    }
+
+    public void setLatitude(double newLat) {
+        this.latitude = newLat;
+    }
+
+    public void setLongitude(double newLon) {
+        this.longitude = newLon;
+    }
+
+    public double getLatitude() {
+        return this.latitude;
+    }
+
+    public double getLongitude() {
+        return this.longitude;
+    }
+
+    public void displayInfo() {
+        System.out.println("Lat: " + this.latitude + ", Lon: " + this.longitude);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        double lat1 = Double.parseDouble(args[0]);
+        double lon1 = Double.parseDouble(args[1]);
+        double lat2 = Double.parseDouble(args[2]);
+
+        Location loc1 = new Location(lat1, lon1);
+        Location loc2 = new Location(loc1);
+
+        loc1.displayInfo();
+        loc2.displayInfo();
+
+        loc2.setLatitude(lat2);
+        loc2.displayInfo();
+    }
+}
