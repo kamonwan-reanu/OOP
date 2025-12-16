@@ -1,0 +1,37 @@
+class TimePeriod {
+    
+    private int startHour;
+    private int endHour;
+
+    
+    public TimePeriod() {
+        this.startHour = 9;
+        this.endHour = 17;
+    }
+
+    
+    public TimePeriod(int startHour, int endHour) {
+        if (startHour < 0 || startHour > 23) {
+            this.startHour = 0;
+        } else {
+            this.startHour = startHour;
+        }
+        
+        if (endHour < 0 || endHour > 23) {
+            this.endHour = 23;
+        } else {
+            this.endHour = endHour;
+        }
+        
+        if (this.startHour > this.endHour) {
+            int temp = this.startHour;
+            this.startHour = this.endHour;
+            this.endHour = temp;
+        }
+    }
+
+    
+    public void displayPeriod() {
+        System.out.printf("%d:00 - %d:00%n", startHour, endHour);
+    }
+}
