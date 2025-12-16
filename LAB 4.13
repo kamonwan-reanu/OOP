@@ -1,0 +1,148 @@
+class Subscription {
+    private final String planName;
+    private final int durationDays;
+    private static final int MAX_DURATION = 365;
+
+    private Subscription(String planName, int durationDays) {
+        this.planName = planName;
+        this.durationDays = durationDays;
+    }
+
+    public static Subscription create(String planName, int durationDays) {
+        validatePlanName(planName);
+        validateDurationDays(durationDays);
+        return new Subscription(planName, durationDays);
+    }
+
+    private static void validatePlanName(String planName) {
+        if (planName == null || planName.trim().isEmpty()) {
+            throw new IllegalArgumentException("Plan name cannot be null or empty");
+        }
+    }
+
+    private static void validateDurationDays(int durationDays) {
+        if (durationDays <= 0) {
+            throw new IllegalArgumentException("Duration must be greater than 0");
+        }
+        if (durationDays > MAX_DURATION) {
+            throw new IllegalArgumentException("Duration cannot exceed " + MAX_DURATION + " days");
+        }
+    }
+
+    public Subscription extend(int additionalDays) {
+        if (additionalDays <= 0) {
+            throw new IllegalArgumentException("Extension days must be positive");
+        }
+
+        int newDuration = this.durationDays + additionalDays;
+
+        if (newDuration > MAX_DURATION) {
+            throw new IllegalStateException("Total duration exceeds maximum allowed policy");
+        }
+
+        return new Subscription(this.planName, newDuration);
+    }
+
+    public void displayInfo() {
+        System.out.println("Plan: " + planName);
+        System.out.println("Days: " + durationDays);
+    }
+
+    public String getPlanName() {
+        return planName;
+    }
+
+    public int getDurationDays() {
+        return durationDays;
+    }
+}
+
+
+public class SubscriptionTest {
+    
+    public static void main(String[] args) {
+        runTestCase1();
+        runTestCase2();
+        runTestCase3();
+        runTestCase4();
+    }
+
+    private static void runTestCase1() {
+        System.out.println("=== Test Case 1 ===");
+        try {
+            Subscription sub = Subscription.create("Standard", 400);
+            sub.displayInfo();
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        try {
+            Subscription sub = Subscription.create("Standard", 300);
+            System.out.println("Subscription created successfully");
+            Subscription extended = sub.extend(100);
+            extended.displayInfo();
+        } catch (IllegalStateException e) {
+            System.out.println("Extension failed: " + e.getMessage());
+        }
+
+        Subscription sub = Subscription.create("Standard", 350);
+        sub.displayInfo();
+        System.out.println();
+    }
+
+    private static void runTestCase2() {
+        System.out.println("=== Test Case 2 ===");
+        try {
+            Subscription sub = Subscription.create("Basic", 100);
+            System.out.println("Subscription created successfully");
+            Subscription extended = sub.extend(10);
+            extended.displayInfo();
+        } catch (IllegalStateException e) {
+            System.out.println("Extension failed: " + e.getMessage());
+        }
+
+        Subscription sub = Subscription.create("Basic", 80);
+        sub.displayInfo();
+        System.out.println();
+    }
+
+    private static void runTestCase3() {
+        System.out.println("=== Test Case 3 ===");
+        try {
+            Subscription sub = Subscription.create("Premium", 365);
+            sub.displayInfo();
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        try {
+            Subscription sub = Subscription.create("Premium", 150);
+            System.out.println("Subscription created successfully");
+            Subscription extended = sub.extend(50);
+            extended.displayInfo();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        System.out.println();
+    }
+
+    private static void runTestCase4() {
+        System.out.println("=== Test Case 4 ===");
+        try {
+            Subscription sub = Subscription.create("Free", 100);
+            sub.displayInfo();
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        try {
+            Subscription sub = Subscription.create("Free", 50);
+            System.out.println("Subscription created successfully");
+            Subscription extended = sub.extend(320);
+            extended.displayInfo();
+        } catch (IllegalStateException e) {
+            System.out.println("Extension failed: " + e.getMessage());
+        }
+        System.out.println();
+    }
+}
