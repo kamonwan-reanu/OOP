@@ -1,0 +1,48 @@
+class Movie {
+    private String title;
+    private String director;
+    private double rating;
+
+    public Movie(String title) {
+        this.title = title;
+        this.director = "Unknown";
+        this.rating = 0.0;
+    }
+
+    public Movie(String title, String director) {
+        this.title = title;
+        this.director = director;
+        this.rating = 0.0;
+    }
+
+    public Movie(String title, String director, double rating) {
+        this.title = title;
+        this.director = director;
+        
+        if (rating < 0.0 || rating > 10.0) {
+            this.rating = 0.0;
+        } else {
+            this.rating = rating;
+        }
+    }
+
+    public void displayDetails() {
+        System.out.println("Title: " + title + ", Director: " + director + ", Rating: " + rating);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Movie movie1 = new Movie("Inception");
+        movie1.displayDetails();
+
+        Movie movie2 = new Movie("Arrival", "Denis Villeneuve");
+        movie2.displayDetails();
+
+        Movie movie3 = new Movie("Avatar", "James Cameron", 15.0);
+        movie3.displayDetails();
+
+        Movie movie4 = new Movie("Cats", "Tom Hooper", 3.5);
+        movie4.displayDetails();
+    }
+}
