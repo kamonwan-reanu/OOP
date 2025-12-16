@@ -1,0 +1,156 @@
+class AuditRecord {
+    private final String user;
+    private final String[] logMessages;
+    private static int maxMessages = 3;
+
+    public AuditRecord(String user) {
+        this.user = user;
+        this.logMessages = new String[maxMessages];
+    }
+
+    public AuditRecord(String user, String[] logs) {
+        this.user = user;
+        this.logMessages = new String[maxMessages];
+        
+        int copyLength = Math.min(logs.length, maxMessages);
+        for (int i = 0; i < copyLength; i++) {
+            this.logMessages[i] = logs[i];
+        }
+    }
+
+    public static void setMaxMessages(int max) {
+        if (max > 0) {
+            maxMessages = max;
+        } else {
+            throw new IllegalArgumentException("Invalid policy.");
+        }
+    }
+
+    public AuditRecord addMessage(String message) {
+        String[] newLogs = new String[maxMessages];
+        
+        boolean inserted = false;
+        int sourceIndex = 0;
+        
+        for (int i = 0; i < maxMessages; i++) {
+            if (!inserted && (sourceIndex >= logMessages.length || 
+                logMessages[sourceIndex] == null)) {
+                newLogs[i] = message;
+                inserted = true;
+            } else if (sourceIndex < logMessages.length && 
+                       logMessages[sourceIndex] != null) {
+                newLogs[i] = logMessages[sourceIndex];
+                sourceIndex++;
+            }
+        }
+        
+        return new AuditRecord(this.user, newLogs);
+    }
+
+    public void displayLog() {
+        StringBuilder output = new StringBuilder();
+        output.append("User: ").append(user).append(", Logs: [");
+        
+        boolean first = true;
+        for (String log : logMessages) {
+            if (log != null) {
+                if (!first) {
+                    output.append(", ");
+                }
+                output.append(log);
+                first = false;
+            }
+        }
+        
+        output.append("]");
+        System.out.println(output.toString());
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        testCase1();
+        testCase2();
+        testCase3();
+        testCase4();
+    }
+
+    private static void testCase1() {
+        System.out.println("\n=== Test Case 1 ===");
+        
+        AuditRecord alice = new AuditRecord("Alice");
+        alice.displayLog();
+        
+        alice = alice.addMessage("LOGIN");
+        alice.displayLog();
+        
+        alice = alice.addMessage("CLOSE_SESSION");
+        alice.displayLog();
+        
+        try {
+            AuditRecord.setMaxMessages(-2);
+        } catch (IllegalArgumentException e) {
+            System.out.println("ERROR 404 added.");
+        }
+        
+        alice = alice.addMessage("ERROR 404");
+        alice.displayLog();
+    }
+
+    private static void testCase2() {
+        System.out.println("\n=== Test Case 2 ===");
+        
+        AuditRecord bob = new AuditRecord("Bob");
+        bob.displayLog();
+        
+        AuditRecord.setMaxMessages(1);
+        
+        String[] logs = {"MSG1", "MSG2", "MSG3", "MSG4"};
+        AuditRecord bobWithLogs = new AuditRecord("Bob", logs);
+        bobWithLogs.displayLog();
+    }
+
+    private static void testCase3() {
+        System.out.println("\n=== Test Case 3 ===");
+        
+        AuditRecord.setMaxMessages(5);
+        
+        AuditRecord charlie = new AuditRecord("Charlie");
+        charlie.displayLog();
+        
+        charlie = charlie.addMessage("MSG1");
+        charlie.displayLog();
+        
+        charlie = charlie.addMessage("MSG2");
+        charlie.displayLog();
+        
+        charlie = charlie.addMessage("SET_POLICY");
+        charlie.displayLog();
+        
+        AuditRecord.setMaxMessages(3);
+        
+        charlie = charlie.addMessage("MSG3");
+        charlie.displayLog();
+        
+        charlie = charlie.addMessage("MSG4");
+        charlie.displayLog();
+    }
+
+    private static void testCase4() {
+        System.out.println("\n=== Test Case 4 ===");
+        
+        AuditRecord.setMaxMessages(2);
+        
+        AuditRecord dave = new AuditRecord("Dave");
+        dave.displayLog();
+        
+        String[] initialLogs = {"LOG1", "LOG2", "LOG3"};
+        AuditRecord daveWithLogs = new AuditRecord("Dave", initialLogs);
+        daveWithLogs.displayLog();
+        
+        AuditRecord.setMaxMessages(3);
+        
+        daveWithLogs = daveWithLogs.addMessage("SET_POLICY");
+        daveWithLogs.displayLog();
+    }
+}
