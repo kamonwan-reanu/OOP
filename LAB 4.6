@@ -1,0 +1,64 @@
+class Point {
+    
+    private final int x;
+    private final int y;
+
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public Point move(int dx, int dy) {
+        if (dx == 0 && dy == 0) {
+            return this;
+        }
+        return new Point(x + dx, y + dy);
+    }
+
+    public void displayInfo() {
+        System.out.println("(" + x + ", " + y + ")");
+    }
+}
+
+public class Main {
+    
+    public static void main(String[] args) {
+        Point p1 = new Point(10, 5);
+        Point p2 = p1.move(0, 1);
+        Point p3 = p2.move(4, 1);
+        
+        p1.displayInfo();
+        p2.displayInfo();
+        p3.displayInfo();
+        
+        Point p4 = new Point(100, 50);
+        p4 = p4.move(-50, 0);
+        p4.displayInfo();
+        
+        p4 = p4.move(-40, -5);
+        p4.displayInfo();
+        
+        Point p5 = new Point(0, 0);
+        p5.displayInfo();
+        
+        p5 = p5.move(5, -5);
+        p5.displayInfo();
+        
+        p5 = p5.move(5, -5);
+        p5.displayInfo();
+        
+        Point p6 = new Point(25, 25);
+        p6.displayInfo();
+        
+        p6 = p6.move(0, 0);
+        p6.displayInfo();
+    }
+}
