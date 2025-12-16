@@ -1,0 +1,84 @@
+class Configuration {
+    private final String theme;
+    private final int fontSize;
+    private final boolean darkMode;
+
+    public Configuration(String theme, int fontSize, boolean darkMode) {
+        validateTheme(theme);
+        validateFontSize(fontSize);
+        
+        this.theme = theme;
+        this.fontSize = fontSize;
+        this.darkMode = darkMode;
+    }
+
+    public Configuration(Configuration base, Configuration user) {
+        this.theme = user.theme != null ? user.theme : base.theme;
+        this.fontSize = user.fontSize > 0 ? user.fontSize : base.fontSize;
+        this.darkMode = user.darkMode;
+    }
+
+    public void displaySettings() {
+        System.out.println("Theme: " + theme + 
+                         ", Size: " + fontSize + 
+                         ", Dark: " + darkMode);
+    }
+
+    private void validateTheme(String theme) {
+        if (theme == null || theme.trim().isEmpty()) {
+            throw new IllegalArgumentException("Theme cannot be empty");
+        }
+    }
+
+    private void validateFontSize(int fontSize) {
+        if (fontSize < 10 || fontSize > 20) {
+            throw new IllegalArgumentException("Font size must be between 10 and 20");
+        }
+    }
+
+    public String getTheme() {
+        return theme;
+    }
+
+    public int getFontSize() {
+        return fontSize;
+    }
+
+    public boolean isDarkMode() {
+        return darkMode;
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        Configuration baseConfig = new Configuration("Dark", 12, true);
+        
+        runTestCase1(baseConfig);
+        runTestCase2(baseConfig);
+        runTestCase3(baseConfig);
+        runTestCase4();
+    }
+
+    private static void runTestCase1(Configuration base) {
+        Configuration userConfig = new Configuration("Dark", 12, true);
+        Configuration finalConfig = new Configuration(base, userConfig);
+        finalConfig.displaySettings();
+    }
+
+    private static void runTestCase2(Configuration base) {
+        Configuration userConfig = new Configuration("Dark", 10, false);
+        Configuration finalConfig = new Configuration(base, userConfig);
+        finalConfig.displaySettings();
+    }
+
+    private static void runTestCase3(Configuration base) {
+        Configuration userConfig = new Configuration("Light", 15, true);
+        Configuration finalConfig = new Configuration(base, userConfig);
+        finalConfig.displaySettings();
+    }
+
+    private static void runTestCase4() {
+        Configuration minimalConfig = new Configuration("Minimal", 20, false);
+        minimalConfig.displaySettings();
+    }
+}
