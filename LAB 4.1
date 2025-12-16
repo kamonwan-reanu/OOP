@@ -1,0 +1,37 @@
+class Book {
+    private String title;
+    private String author;
+
+    public Book(String title) {
+        this.title = title;
+        this.author = "Unknown";
+    }
+
+    public Book(String title, String author) {
+        this.title = title;
+        this.author = author;
+    }
+
+    public void displayInfo() {
+        System.out.println("Title: " + title + ", Author: " + author);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        int numberOfBooks = Integer.parseInt(args[0]);
+        
+        for (int i = 1; i <= numberOfBooks; i++) {
+            String bookTitle = args[i];
+            
+            if (i + numberOfBooks < args.length) {
+                String bookAuthor = args[i + numberOfBooks];
+                Book book = new Book(bookTitle, bookAuthor);
+                book.displayInfo();
+            } else {
+                Book book = new Book(bookTitle);
+                book.displayInfo();
+            }
+        }
+    }
+}
