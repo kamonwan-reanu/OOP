@@ -1,0 +1,71 @@
+class Item {
+    protected String name;
+    
+    public Item(String name) {
+        this.name = name;
+    }
+    
+    public double getValue() {
+        return 0.0;
+    }
+}
+
+class PhysicalProduct extends Item {
+    protected double unitPrice;
+    protected int quantity;
+    
+    public PhysicalProduct(String name, double unitPrice, int quantity) {
+        super(name);
+        this.unitPrice = unitPrice;
+        this.quantity = quantity;
+    }
+    
+    @Override
+    public double getValue() {
+        return unitPrice * quantity;
+    }
+}
+
+class DigitalSubscription extends Item {
+    protected double monthlyCost;
+    protected int months;
+    
+    public DigitalSubscription(String name, double monthlyCost, int months) {
+        super(name);
+        this.monthlyCost = monthlyCost;
+        this.months = months;
+    }
+    
+    @Override
+    public double getValue() {
+        return monthlyCost * months;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Item apple = new PhysicalProduct("Apple", 10.0, 65);
+        System.out.println(apple.getValue());
+        
+        Item premiumAccess = new DigitalSubscription("Premium Access", 50.0, 12);
+        System.out.println(premiumAccess.getValue());
+        
+        Item laptop = new PhysicalProduct("Laptop", 15000.0, 1);
+        System.out.println(laptop.getValue());
+        
+        Item basicPlan = new DigitalSubscription("Basic Plan", 100.0, 5);
+        System.out.println(basicPlan.getValue());
+        
+        Item coffee = new PhysicalProduct("Coffee", 50.50, 1);
+        System.out.println(coffee.getValue());
+        
+        Item cloudStorage = new DigitalSubscription("Cloud Storage", 20.0, 26);
+        System.out.println(cloudStorage.getValue());
+        
+        Item widgets = new PhysicalProduct("Widgets", 1.0, 100);
+        System.out.println(widgets.getValue());
+        
+        Item proTrial = new DigitalSubscription("Pro Trial", 0.0, 3);
+        System.out.println(proTrial.getValue());
+    }
+}
