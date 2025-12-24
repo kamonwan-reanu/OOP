@@ -1,0 +1,41 @@
+class Employee {
+    
+    protected double salary;
+    
+    public double calculateBonus() {
+        return 0.0;
+    }
+    
+}
+
+
+class Manager extends Employee {
+    
+    @Override
+    public double calculateBonus() {
+        return salary * 0.15;
+    }
+    
+}
+
+
+public class Main {
+    
+    public static void main(String[] args) {
+        
+        java.util.Scanner scanner = new java.util.Scanner(System.in);
+        
+        double inputSalary = scanner.nextDouble();
+        
+        Manager manager = new Manager();
+        manager.salary = inputSalary;
+        
+        double bonus = manager.calculateBonus();
+        
+        System.out.println(bonus);
+        
+        scanner.close();
+        
+    }
+    
+}
