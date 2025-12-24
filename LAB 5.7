@@ -1,0 +1,76 @@
+class Employee {
+    protected String name;
+    protected double baseSalary;
+
+    public Employee(String name, double baseSalary) {
+        this.name = name;
+        this.baseSalary = baseSalary;
+    }
+
+    public double calculatePay() {
+        return baseSalary;
+    }
+}
+
+
+class SalesEmployee extends Employee {
+    protected double commissionRate;
+
+    public SalesEmployee(String name, double baseSalary, double commissionRate) {
+        super(name, baseSalary);
+        this.commissionRate = commissionRate;
+    }
+
+    @Override
+    public double calculatePay() {
+        return 0.0;
+    }
+}
+
+
+class Manager extends Employee {
+    protected double fixedBonus;
+
+    public Manager(String name, double baseSalary, double fixedBonus) {
+        super(name, baseSalary);
+        this.fixedBonus = fixedBonus;
+    }
+
+    @Override
+    public double calculatePay() {
+        return baseSalary + fixedBonus;
+    }
+}
+
+
+class PayrollProcessor {
+    public static void processEmployee(Employee employee) {
+        String employeeName = employee.name;
+        double totalPay = employee.calculatePay();
+        
+        System.out.println(employeeName + " total pay: " + totalPay);
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Employee alice = new Employee("Alice", 50000.0);
+        Employee bob = new Manager("Bob", 70000.0, 10000.0);
+        Employee charlie = new SalesEmployee("Charlie", 30000.0, 0.05);
+        Employee david = new Manager("David", 40000.0, 5000.0);
+        Employee eve = new Employee("Eve", 100000.0);
+        Employee frank = new Manager("Frank", 200000.0, 20000.0);
+        Employee grace = new Employee("Grace", 80000.0);
+        Employee henry = new Manager("Henry", 50000.0, 0.0);
+
+        PayrollProcessor.processEmployee(alice);
+        PayrollProcessor.processEmployee(bob);
+        PayrollProcessor.processEmployee(charlie);
+        PayrollProcessor.processEmployee(david);
+        PayrollProcessor.processEmployee(eve);
+        PayrollProcessor.processEmployee(frank);
+        PayrollProcessor.processEmployee(grace);
+        PayrollProcessor.processEmployee(henry);
+    }
+}
