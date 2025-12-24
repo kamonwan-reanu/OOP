@@ -1,0 +1,73 @@
+class ProjectTask {
+    protected String description;
+    protected double basehours;
+    
+    public ProjectTask(String description, int basehours) {
+        this.description = description;
+        this.basehours = basehours;
+    }
+    
+    public double calculateCost() {
+        return basehours * 50.0;
+    }
+}
+
+
+class ComplexTask extends ProjectTask {
+    protected double setUpFee;
+    
+    public ComplexTask(String description, int basehours, double setUpFee) {
+        super(description, basehours);
+        this.setUpFee = setUpFee;
+    }
+    
+    @Override
+    public double calculateCost() {
+        return 0;
+    }
+}
+
+
+class SimpleTask extends ProjectTask {
+    
+    public SimpleTask(String description, int basehours) {
+        super(description, basehours);
+    }
+    
+    @Override
+    public double calculateCost() {
+        return 0;
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        ProjectTask[] tasks = {
+            new ComplexTask("Database Setup", 10, 600.0),
+            new ProjectTask("UI Design", 5),
+            new ComplexTask("Network Config", 20, 1150.0),
+            new SimpleTask("Documentation", 10),
+            new ComplexTask("Security Audit", 1000, 1055.0),
+            new ProjectTask("Coffee Break", 0),
+            new SimpleTask("Final Integration", 0),
+            new ComplexTask("QA", 20, 100.0)
+        };
+        
+        System.out.println("Task Cost Summary:");
+        System.out.println("==================");
+        
+        for (ProjectTask task : tasks) {
+            double cost = task.calculateCost();
+            System.out.printf("%-20s: $%.2f%n", task.description, cost);
+        }
+        
+        double totalCost = 0;
+        for (ProjectTask task : tasks) {
+            totalCost += task.calculateCost();
+        }
+        
+        System.out.println("==================");
+        System.out.printf("Total Project Cost: $%.2f%n", totalCost);
+    }
+}
