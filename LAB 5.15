@@ -1,0 +1,58 @@
+class RentalVehicle {
+    protected String model;
+    protected double rentalRate;
+
+    public RentalVehicle(String model, double rentalRate) {
+        this.model = model;
+        this.rentalRate = rentalRate;
+    }
+
+    public double calculateFee() {
+        return rentalRate;
+    }
+}
+
+
+class Car extends RentalVehicle {
+    public Car(String model, double rentalRate) {
+        super(model, rentalRate);
+    }
+
+    @Override
+    public double calculateFee() {
+        return 0.0;
+    }
+}
+
+
+class Motorcycle extends RentalVehicle {
+    public Motorcycle(String model, double rentalRate) {
+        super(model, rentalRate);
+    }
+
+    @Override
+    public double calculateFee() {
+        return 0.0;
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        RentalVehicle toyota = new Car("Toyota", 1000.0);
+        RentalVehicle honda = new Motorcycle("Honda", 500.0);
+        RentalVehicle tesla = new Car("Tesla", 2500.0);
+        RentalVehicle kawasaki = new Motorcycle("Kawasaki", 800.0);
+        RentalVehicle yamaha = new Motorcycle("Yamaha", 900.0);
+        RentalVehicle ford = new Car("Ford", 100.0);
+        RentalVehicle bmw = new Car("BMW", 3000.0);
+
+        System.out.println(toyota.calculateFee());
+        System.out.println(honda.calculateFee());
+        System.out.println(tesla.calculateFee());
+        System.out.println(kawasaki.calculateFee());
+        System.out.println(yamaha.calculateFee());
+        System.out.println(ford.calculateFee());
+        System.out.println(bmw.calculateFee());
+    }
+}
