@@ -1,0 +1,75 @@
+class Person {
+    protected String name;
+    
+    public Person(String name) {
+        this.name = name;
+    }
+    
+    public String getStatus() {
+        return "";
+    }
+}
+
+class Student extends Person {
+    protected int studentId;
+    
+    public Student(String name, int studentId) {
+        super(name);
+        this.studentId = studentId;
+    }
+    
+    @Override
+    public String getStatus() {
+        return "Student: " + name + ", ID: " + studentId;
+    }
+}
+
+class Employee extends Person {
+    protected double salary;
+    
+    public Employee(String name, double salary) {
+        super(name);
+        this.salary = salary;
+    }
+    
+    @Override
+    public String getStatus() {
+        return "Employee: " + name + ", Salary: " + salary;
+    }
+    
+    public void applyBonus(double bonus) {
+        this.salary += bonus;
+    }
+}
+
+class StudentEmployee extends Employee {
+    private int studentId;
+    
+    public StudentEmployee(String name, int studentId, double salary) {
+        super(name, salary);
+        this.studentId = studentId;
+    }
+    
+    @Override
+    public String getStatus() {
+        return "Student: " + name + ", ID: " + studentId + 
+               " | Employee: " + name + ", Salary: " + salary;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Person[] people = new Person[6];
+        
+        people[0] = new Student("Alice", 101);
+        people[1] = new Employee("Bob", 5000.0);
+        people[2] = new StudentEmployee("Charlie", 202, 1000.0);
+        people[3] = new Employee("David", 10000.0);
+        people[4] = new StudentEmployee("Eve", 303, 1500.0);
+        people[5] = new Student("Grace", 500);
+        
+        for (Person person : people) {
+            System.out.println(person.getStatus());
+        }
+    }
+}
