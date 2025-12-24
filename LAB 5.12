@@ -1,0 +1,74 @@
+public class Service {
+    protected String name;
+    protected double basePrice;
+    
+    public Service(String name, double basePrice) {
+        this.name = name;
+        this.basePrice = basePrice;
+    }
+    
+    public double calculateFinalPrice() {
+        return basePrice;
+    }
+}
+
+public class BasicService extends Service {
+    
+    public BasicService(String name, double basePrice) {
+        super(name, basePrice);
+    }
+    
+    @Override
+    public double calculateFinalPrice() {
+        return basePrice;
+    }
+}
+
+public class PremiumService extends Service {
+    private double premiumRate;
+    
+    public PremiumService(String name, double basePrice, double premiumRate) {
+        super(name, basePrice);
+        this.premiumRate = premiumRate;
+    }
+    
+    @Override
+    public double calculateFinalPrice() {
+        return basePrice * (1 + premiumRate);
+    }
+}
+
+public class ServiceManager {
+    
+    public static void main(String[] args) {
+        Service basicMaintenance = new BasicService("Basic Maintenance", 1000.0);
+        Service carWash = new BasicService("Car Wash", 5750.0);
+        Service oilSupport = new BasicService("Oil Support", 500.0);
+        
+        Service standard = new PremiumService("Standard", 50.0, 0.05);
+        Service gold = new PremiumService("Gold", 100.0, 0.20);
+        Service premiumGold = new PremiumService("Premium Gold", 100.0, 0.00);
+        
+        Service consultation = new PremiumService("Consultation", 8000.0, 0.00);
+        Service exclusiveEvent = new PremiumService("Exclusive Event", 30000.0, 0.00);
+        Service vipAccess = new PremiumService("VIP Access", 20000.0, 0.50);
+        
+        Service initialSetup = new PremiumService("Initial Setup", 0.0, 0.00);
+        Service addedValue = new PremiumService("Added Value", 10000.0, 0.00);
+        
+        System.out.println("Basic Maintenance: " + basicMaintenance.calculateFinalPrice());
+        System.out.println("Car Wash: " + carWash.calculateFinalPrice());
+        System.out.println("Oil Support: " + oilSupport.calculateFinalPrice());
+        
+        System.out.println("Standard: " + standard.calculateFinalPrice());
+        System.out.println("Gold: " + gold.calculateFinalPrice());
+        System.out.println("Premium Gold: " + premiumGold.calculateFinalPrice());
+        
+        System.out.println("Consultation: " + consultation.calculateFinalPrice());
+        System.out.println("Exclusive Event: " + exclusiveEvent.calculateFinalPrice());
+        System.out.println("VIP Access: " + vipAccess.calculateFinalPrice());
+        
+        System.out.println("Initial Setup: " + initialSetup.calculateFinalPrice());
+        System.out.println("Added Value: " + addedValue.calculateFinalPrice());
+    }
+}
