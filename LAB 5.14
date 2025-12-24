@@ -1,0 +1,76 @@
+class Shipping {
+    protected String trackingId;
+    protected double baseFee;
+    
+    public Shipping(String trackingId, double baseFee) {
+        this.trackingId = trackingId;
+        this.baseFee = baseFee;
+    }
+    
+    public double calculateTotalFee() {
+        return baseFee;
+    }
+}
+
+
+class StandardShipping extends Shipping {
+    
+    public StandardShipping(String id, double baseFee) {
+        super(id, baseFee);
+    }
+    
+    @Override
+    public double calculateTotalFee() {
+        return 0.0;
+    }
+}
+
+
+class PremiumShipping extends Shipping {
+    protected double insuranceFee;
+    
+    public PremiumShipping(String id, double baseFee, double insuranceFee) {
+        super(id, baseFee);
+        this.insuranceFee = insuranceFee;
+    }
+    
+    @Override
+    public double calculateTotalFee() {
+        return 0.0;
+    }
+}
+
+
+public class Main {
+    
+    public static void main(String[] args) {
+        
+        StandardShipping standard1 = new StandardShipping("T101", 100.0);
+        StandardShipping standard2 = new StandardShipping("P002", 500.0);
+        StandardShipping standard3 = new StandardShipping("S050", 10.0);
+        
+        System.out.println(standard1.calculateTotalFee());
+        System.out.println(standard2.calculateTotalFee());
+        System.out.println(standard3.calculateTotalFee());
+        
+        
+        PremiumShipping premium1 = new PremiumShipping("S111", 2000.0, 100.0);
+        PremiumShipping premium2 = new PremiumShipping("P999", 10000.0, 1500.0);
+        PremiumShipping premium3 = new PremiumShipping("10020", 100.0, 15000.0);
+        
+        System.out.println(premium1.calculateTotalFee());
+        System.out.println(premium2.calculateTotalFee());
+        System.out.println(premium3.calculateTotalFee());
+        
+        
+        Shipping[] allShipments = {
+            new StandardShipping("S333", 50.0),
+            new PremiumShipping("S010", 5.0, 5.0),
+            new PremiumShipping("P444", 0.0, 0.0)
+        };
+        
+        for (Shipping shipment : allShipments) {
+            System.out.println(shipment.calculateTotalFee());
+        }
+    }
+}
