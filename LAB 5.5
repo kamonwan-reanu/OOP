@@ -1,0 +1,71 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        double radius = scanner.nextDouble();
+        
+        Shape circle = new Circle(radius);
+        System.out.println(circle.calculateArea());
+        
+        double width = scanner.nextDouble();
+        double height = scanner.nextDouble();
+        
+        Shape rectangle = new Rectangle(width, height);
+        System.out.println(rectangle.calculateArea());
+        
+        scanner.close();
+    }
+}
+
+abstract class Shape {
+    protected String name;
+    
+    public Shape(String name) {
+        this.name = name;
+    }
+    
+    public abstract double calculateArea();
+}
+
+class Circle extends Shape {
+    protected double radius;
+    
+    public Circle(String name, double radius) {
+        super(name);
+        this.radius = radius;
+    }
+    
+    public Circle(double radius) {
+        super("Circle");
+        this.radius = radius;
+    }
+    
+    @Override
+    public double calculateArea() {
+        return Math.PI * radius * radius;
+    }
+}
+
+class Rectangle extends Shape {
+    protected double width;
+    protected double height;
+    
+    public Rectangle(String name, double width, double height) {
+        super(name);
+        this.width = width;
+        this.height = height;
+    }
+    
+    public Rectangle(double width, double height) {
+        super("Rectangle");
+        this.width = width;
+        this.height = height;
+    }
+    
+    @Override
+    public double calculateArea() {
+        return width * height;
+    }
+}
