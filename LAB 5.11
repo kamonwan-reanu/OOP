@@ -1,0 +1,84 @@
+import java.util.*;
+
+class Document {
+    protected String title;
+    
+    public Document(String title) {
+        this.title = title;
+    }
+    
+    public void displayDetails() {
+        System.out.println("Document: " + title);
+    }
+}
+
+class TextDocument extends Document {
+    protected int wordCount;
+    
+    public TextDocument(String title, int wordCount) {
+        super(title);
+        this.wordCount = wordCount;
+    }
+    
+    @Override
+    public void displayDetails() {
+        System.out.println("Text Document: " + title);
+        System.out.println("Word Count: " + wordCount);
+    }
+}
+
+class PDFDocument extends Document {
+    protected int pageCount;
+    
+    public PDFDocument(String title, int pageCount) {
+        super(title);
+        this.pageCount = pageCount;
+    }
+    
+    @Override
+    public void displayDetails() {
+        System.out.println("PDF Document: " + title);
+        System.out.println("Page Count: " + pageCount);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        List<Document> documents = new ArrayList<>();
+        
+        documents.add(new TextDocument("Draft A", 1000));
+        documents.add(new PDFDocument("PDF Spec Sheet", 50));
+        documents.add(new TextDocument("Proposal Draft", 1500));
+        documents.add(new PDFDocument("Manual", 100));
+        documents.add(new TextDocument("Review Document", 500));
+        
+        documents.add(new PDFDocument("Legal Doc", 5000));
+        documents.add(new PDFDocument("Contract", 20));
+        documents.add(new TextDocument("Memo", 100));
+        documents.add(new PDFDocument("Agreement", 8));
+        
+        documents.add(new TextDocument("Short Email", 50));
+        documents.add(new PDFDocument("Zero Page", 0));
+        documents.add(new TextDocument("Report 1", 1000));
+        documents.add(new PDFDocument("Big Book", 250));
+        
+        documents.add(new TextDocument("Final Thesis", 20000));
+        documents.add(new PDFDocument("Appendix", 5000));
+        documents.add(new TextDocument("Proposal Text", 600));
+        documents.add(new PDFDocument("Diagram", 15));
+        
+        System.out.println("========================================");
+        System.out.println("   DOCUMENT MANAGEMENT SYSTEM");
+        System.out.println("========================================\n");
+        
+        for (int i = 0; i < documents.size(); i++) {
+            System.out.println("Entry " + (i + 1) + ":");
+            documents.get(i).displayDetails();
+            System.out.println();
+        }
+        
+        System.out.println("========================================");
+        System.out.println("Total Documents: " + documents.size());
+        System.out.println("========================================");
+    }
+}
